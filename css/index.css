@@ -1,3 +1,47 @@
 body {
-   font-family: 12px;
+    font-family: 12px;
+}
+
+.header {
+    font-family: 'Helvetica';
+    text-align: center;
+    background-color: rgba(50, 50, 255, .5);
+    color: white;
+    padding-bottom: 0px;
+    height: 120px;
+    margin-bottom: 0px;
+
+}
+
+.header p {
+    padding: 0px;
+    margin: 10px 0px 4px 0px;
+    font-size: 14px;
+
+}
+
+.header h3 {
+    font-size: 45px;
+    padding-top: 15px;
+
+    text-shadow: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+    margin: 0px;
+
+}
+
+.chem {
+    padding-left: 50px;
+    padding-top: 15px;
+    margin: 10px;
+    border: solid black 1px;
+    width: auto;
+}
+
+#pers_info {
+    font-size: 11px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px;
 }
