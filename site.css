@@ -20,6 +20,7 @@ img {
 }
 
 .sidenav {
+	margin-top: 0;
 	height: 100%;
 	width: 160px;
 	position: fixed;
@@ -28,18 +29,32 @@ img {
 	left: 0;
 	background-color: black;
 	overflow-x: hidden;
-	padding-top: 20px;
+	padding: 0px;
+	list-style: none;
 }
 
-.sidenav a {
+#dropdown {
+	display: none;
+	color: #818181;
+	font-size: 14pt;
+	padding: 0 32px;
+	margin: 0px;
+	width: 160px;
+}
+
+.sidenav-item {
 	padding: 6px 8px 6px 16px;
-	text-decoration: none;
 	font-size: 25px;
 	color: #818181;
 	display: block;
 }
 
-.sidenav a:hover {
+.sidenav li a {
+	text-decoration: none;
+	color: #818181;
+}
+
+.sidenav li:hover {
 	background-color: silver;
 }
 
@@ -49,18 +64,12 @@ img {
 }
 
 .dropbtn {
-    background-color: black;
     color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
     cursor: pointer;
-    width: 160px;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
+	padding: 6px 8px 6px 16px;
+	font-size: 25px;
+	color: #818181;
+	display: block;
 }
 
 .dropdown-content {
@@ -74,14 +83,6 @@ img {
 
 .dropdown-content a {
     font-size: 14pt;
-    color: #818181;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-#custom {
-    font-size: 25px;
     color: #818181;
     padding: 12px 16px;
     text-decoration: none;
