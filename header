@@ -2,11 +2,13 @@
 <html>
 
 <head>
+<title>bwestbro.com</title>
 <link rel="stylesheet" type="text/css" href="css/site.css">
 <link rel="icon" href="images/favicon.png" type="image/gif" sizes="16x16">
 <script src="js/site.js"></script>
 </head>
 
+<body>
 <div class="sidenav">
 	<a href="..">About</a>
 	<div class="dropdown">
@@ -22,13 +24,3 @@
 	<a href="tools.html">Tools</a>
 </div>
 
-<div class="main">
-<body>
-<p>
-[1] B.R. Westbrook, K.M. Dreux, G.S. Tschumper, J.S. Francisco and R.C. Fortenberry, <em>PCCP</em>, (2018). Binding of the Atomic Cations Hydrogen through Argon to Water and Hydrogen Sulfide<br>
-<a href="http://dx.doi.org/10.1039/C8CP05378B"
-       class="pubs">DOI Link</a>
-</body>
-</div>
-
-</html>
