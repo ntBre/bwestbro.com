@@ -2,27 +2,24 @@
 <html>
 
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>bwestbro.com</title>
-<link rel="stylesheet" type="text/css" href="site.css">
-<link rel="icon" href="resources/images/favicon.png" type="image/gif" sizes="16x16">
-<script src="site.js"></script>
+<link rel="stylesheet" type="text/css" href="./site.css">
+<link rel="icon" href="./resources/images/favicon.png" type="image/gif" sizes="16x16">
+<script src="./site.js"></script>
 </head>
 
 <body>
-<div class="sidenav">
-	<a href="..">About</a>
-	<div class="dropdown">
-	<a onclick="myFunction()" class="dropbtn">Courses</a>
-	<div id="myDropdown" class="dropdown-content">
-		<a href="sp18.html">Spring 2018</a>
-		<a href="fa18.html">Fall 2018</a>
-	<a id="custom" href="pubs.html">Publications</a>
-	<a id="custom" href="tools.html">Tools</a>
-	</div>
-	</div>
-	<a href="pubs.html">Publications</a>
-	<a href="tools.html">Tools</a>
-</div>
+<ul class="sidenav">
+		<li><a class="sidenav-item" href="index.html">About</a></li>
+		<li><a class="dropbtn">Courses</a></li>	
+		<div id="dropdown">
+			<li><a href="./sp18.html">Spring 2018</a></li>	
+			<li><a href="./fa18.html">Fall 2018</a></li>	
+		</div>
+			<li><a class="sidenav-item" href="./pubs.html">Publications</a></li>	
+			<li><a class="sidenav-item" href="./tools.html">Tools</a></li>	
+</ul>
 
 <div class="main">
 <h1>CHEM 2320 Spring 2018</h1>
