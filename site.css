@@ -30,12 +30,11 @@ h1 {
 	text-align: left;
 }
 
-publications ul li {
+.publications ul li {
 	text-align: left;
 }
 
-publications ul li p {
-	display: inline;	
+.publications ul li p {
 	padding-left: 10px;
 }
 
