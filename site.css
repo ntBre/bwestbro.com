@@ -1,6 +1,7 @@
 body {
 	font-family: Roboto;
 }
+
 h1 { 
 	text-align: center;
 }
@@ -11,103 +12,25 @@ h1 {
 }
 
 .spring-18 {
-	width: 50%;
+	width: 40%;
 	border: solid black 1px;
-	float: left;
 	display: inline-block;
 }
 
 .fall-18 {
-	width: 50%;
+	width: 40%;
 	border: solid black 1px;
 }
 
+.course {
+	padding-left: 15px;
+
+}
+
+.course p {
+	padding-left: 15px;
+}
 .publications {
 	width: 50%;
 	border: solid black 1px;
 }
-
-p {
-	font-size: 14pt;
-	width: 75%;
-	float: left;
-	padding: 0px 40px;
-}
-
-img {
-	width: 200px;
-	height: auto;
-	vertical-align: middle;
-}
-
-.sidenav {
-	margin-top: 0;
-	height: 100%;
-	width: 160px;
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	background-color: black;
-	overflow-x: hidden;
-	padding: 0px;
-	list-style: none;
-}
-
-#dropdown {
-	display: none;
-	color: #818181;
-	font-size: 14pt;
-	padding: 0 32px;
-	margin: 0px;
-	width: 160px;
-}
-
-.sidenav-item {
-	padding: 6px 8px 6px 16px;
-	font-size: 25px;
-	color: #818181;
-	display: block;
-}
-
-.sidenav li a {
-	text-decoration: none;
-	color: #818181;
-}
-
-.sidenav li:hover {
-	background-color: silver;
-}
-
-.main {
-	margin-left: 160px;
-	padding: 0px 10px;
-}
-
-.dropbtn {
-    color: white;
-    cursor: pointer;
-	padding: 6px 8px 6px 16px;
-	font-size: 25px;
-	color: #818181;
-	display: block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: black;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    font-size: 14pt;
-    color: #818181;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.show {display:block;}
