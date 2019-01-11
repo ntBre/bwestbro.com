@@ -1,5 +1,6 @@
 body {
 	font-family: Roboto;
+	background-color: bisque;
 }
 
 h1 { 
@@ -44,22 +45,25 @@ h1 {
 }
 
 .spring-18 {
-	width: 25%;
 	border: solid black 1px;
 	display: inline-block;
+
 }
 
 .fall-18 {
-	width: 25%;
 	border: solid black 1px;
 }
 
 .course {
+	width: 15%;
 	padding-left: 15px;
-
+	background-color: aliceblue;
+	margin-left: 25px;
+	display: inline-block;
 }
 
 .course p {
 	padding-left: 15px;
+	padding-bottom: 0px;
 }
 
