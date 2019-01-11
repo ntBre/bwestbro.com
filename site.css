@@ -1,5 +1,24 @@
+body {
+	font-family: Roboto;
+}
 h1 { 
 	text-align: center;
+}
+
+.main {
+	width: 50%;
+	border: solid black 1px;
+}
+
+.spring-18 {
+	width: 50%;
+	border: solid black 1px;
+	float: left;
+}
+
+.fall-18 {
+	width: 50%;
+	border: solid black 1px;
 }
 
 p {
@@ -7,10 +26,6 @@ p {
 	width: 75%;
 	float: left;
 	padding: 0px 40px;
-}
-
-body {
-	background-color: white;
 }
 
 img {
