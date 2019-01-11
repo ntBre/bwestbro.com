@@ -14,9 +14,15 @@ h1 {
 	width: 50%;
 	border: solid black 1px;
 	float: left;
+	display: inline-block;
 }
 
 .fall-18 {
+	width: 50%;
+	border: solid black 1px;
+}
+
+.publications {
 	width: 50%;
 	border: solid black 1px;
 }
