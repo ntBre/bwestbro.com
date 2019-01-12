@@ -13,7 +13,6 @@ h1 {
 	text-align: center;
 	float: right;
 	margin-right: 100px;
-	margin-top: 40px;
 }
 
 .headshot {
@@ -45,18 +44,25 @@ h1 {
 }
 
 .spring-18 {
+	float: left;
 	border: solid black 1px;
-	display: inline-block;
-
 }
 
 .fall-18 {
 	border: solid black 1px;
+	display: inline-block;
+}
+
+.spring-19 {
+	border: solid black 1px;
+	float: left;
 }
 
 .course {
+	margin-top: 40px;
 	width: 15%;
 	padding-left: 15px;
+	padding-right: 15px;
 	background-color: aliceblue;
 	margin-left: 25px;
 	display: inline-block;

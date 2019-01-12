@@ -7,8 +7,4 @@ All of the above in a permanent bar on the left with content on right
 	maybe grey or navy blue
 
 To do
-Remove table formating from fa18
-Fix links to worksheets
------------------------------------------
-Change sidenav tags to list
-load navbar dynamically
+Make courses dynamic (php?)
