@@ -1,6 +1,6 @@
 body {
 	font-family: Roboto;
-	background-color: bisque;
+	background-color: lightsteelblue;
 }
 
 h1 { 
@@ -63,7 +63,7 @@ h1 {
 	width: 15%;
 	padding-left: 15px;
 	padding-right: 15px;
-	background-color: aliceblue;
+	background-color: mintcream;
 	margin-left: 25px;
 	display: inline-block;
 }
