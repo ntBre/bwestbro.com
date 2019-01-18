@@ -60,11 +60,12 @@ h1 {
 
 .course {
 	margin-top: 40px;
+	margin-left: 25px;
+	margin-right: 25px;
 	width: 15%;
 	padding-left: 15px;
 	padding-right: 15px;
 	background-color: mintcream;
-	margin-left: 25px;
 	display: inline-block;
 }
 

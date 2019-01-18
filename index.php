@@ -59,8 +59,11 @@
 				$names = array();
 				foreach ($files as $filename) {
 	
-					if(substr(basename($filename, ".pdf"), 0, 1) == 'w') {
-						$name =  'Worksheet ' . substr(basename($filename, ".pdf"), -2);
+					$base_name = basename($filename, ".pdf");
+
+					if (substr($base_name, 0, 1) == 'w') {
+						
+						$name =  'Worksheet ' . str_replace("-", " ", substr($base_name, 1, strlen($base_name)));
 						array_push($names, $name);
 						echo "<p><a href=$filename>" . $name . "</a></p>";
 					}
