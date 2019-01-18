@@ -7,12 +7,24 @@ h1 {
 	text-align: center;
 }
 
+.header {
+	color: mintcream;
+}
+
+.top-bar {
+	width: 100%;
+	height: 50px;
+	background-color: rgb(85, 117, 158);
+	padding: 20px 0px;
+	border: solid black 1px;
+}
+
 .main {
 	width: 40%;
 	padding: 15px;
 	text-align: center;
 	float: right;
-	margin-right: 100px;
+	margin-right: 10px;
 }
 
 .headshot {
@@ -50,7 +62,7 @@ h1 {
 
 .fall-18 {
 	border: solid black 1px;
-	display: inline-block;
+	float: left;
 }
 
 .spring-19 {
@@ -61,10 +73,9 @@ h1 {
 .course {
 	margin-top: 40px;
 	margin-left: 25px;
-	margin-right: 25px;
-	width: 15%;
+	margin-bottom: 40px;
 	padding-left: 15px;
-	padding-right: 15px;
+	width: 15%;
 	background-color: mintcream;
 	display: inline-block;
 }
