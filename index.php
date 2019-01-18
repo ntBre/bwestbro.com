@@ -2,13 +2,36 @@
 <html>
 
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <title>bwestbro.com</title>
 <link rel="stylesheet" type="text/css" href="./site.css">
 <link rel="icon" href="./resources/images/favicon.png" type="image/gif" sizes="16x16">
 <script src="./site.js"></script>
 </head>
+
+<?php
+	
+	function course_pop($files){
+		$names = array();
+		foreach ($files as $filename) {
+
+			$base_name = basename($filename, ".pdf");
+
+			if (substr($base_name, 0, 1) == 'w') {
+				
+				$name =  'Worksheet ' . str_replace("-", " ", substr($base_name, 1, strlen($base_name)));
+				array_push($names, $name);
+				echo "<p><a href=$filename>" . $name . "</a></p>";
+			}
+
+			elseif (substr($base_name, 0, 1) == 'e') {
+				$name =  'Exam Review ' . substr($base_name, 1, 1);
+				array_push($names, $name);
+				echo "<p><a href=$filename>" . $name . "</a></p>";	
+			}
+		}	
+	}
+?>
 
 <body>
 
@@ -54,20 +77,17 @@
 	<div class="fall-18 course">
 		<h1>CHEM 2320 Fall 2018</h1>
 			<h3>Worksheets</h3>
+
 			<?php
 				$files = glob("./fa18/w*.pdf");
-				$names = array();
-				foreach ($files as $filename) {
-	
-					$base_name = basename($filename, ".pdf");
+				course_pop($files);
+			?>
 
-					if (substr($base_name, 0, 1) == 'w') {
-						
-						$name =  'Worksheet ' . str_replace("-", " ", substr($base_name, 1, strlen($base_name)));
-						array_push($names, $name);
-						echo "<p><a href=$filename>" . $name . "</a></p>";
-					}
-				}	
+			<h3>Exam Reviews</h3>
+
+			<?php
+				$files = glob("./fa18/e*.pdf");
+				course_pop($files);
 			?>
 	</div>
 
