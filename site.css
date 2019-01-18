@@ -7,6 +7,17 @@ h1 {
 	text-align: center;
 }
 
+h3 {
+	font-weight: bold;
+}
+
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
 .header {
 	color: mintcream;
 }
@@ -57,24 +68,28 @@ h1 {
 
 .spring-18 {
 	float: left;
-	border: solid black 1px;
+	border: solid black 2px;
+	border-radius: 10px;
 }
 
 .fall-18 {
-	border: solid black 1px;
+	border: solid black 2px;
 	float: left;
+	border-radius: 10px;
 }
 
 .spring-19 {
-	border: solid black 1px;
+	border: solid black 2px;
 	float: left;
+	border-radius: 10px;
 }
 
 .course {
 	margin-top: 40px;
 	margin-left: 25px;
 	margin-bottom: 40px;
-	padding-left: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
 	width: 15%;
 	background-color: mintcream;
 	display: inline-block;

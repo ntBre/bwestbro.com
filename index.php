@@ -43,8 +43,8 @@
 		<p>My name is Brent Westbrook, and I am currently a senior chemistry major
 		at St. Edward's University in Austin, Texas. I am also entering my fifth
 		semester as a Supplemental Instructor at St. Edward's, which is probably why
-		you are here. Feel free to explore, but to find worksheets for this and previous 
-		semesters, scroll down to your course.</p>
+		you are here. Feel free to explore the worksheets from this and previous 
+		semesters to the left.</p>
 
 		<div class="publications">
 			<h1>Publications</h1>
