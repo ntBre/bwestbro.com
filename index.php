@@ -92,6 +92,18 @@
 	<div class="spring-19 course">
 		<h1>CHEM 2327 Spring 2019</h1>
 		<h3>Worksheets</h3>
+
+			<?php
+				$files = glob("./sp19/w*.pdf");
+				course_pop($files);
+			?>
+
+			<h3>Exam Reviews</h3>
+
+			<?php
+				$files = glob("./sp19/e*.pdf");
+				course_pop($files);
+			?>
 	</div>
 	
 </body>
