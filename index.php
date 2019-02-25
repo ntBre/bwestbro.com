@@ -27,6 +27,11 @@
 				array_push($names, $name);
 				echo "<p><a href=$filename>" . $name . "</a></p>";	
 			}
+			elseif (substr($base_name, 0, 1) == 'a') {
+				$name =  'Answer Key ' . substr($base_name, 1, 1);
+				array_push($names, $name);
+				echo "<p><a href=$filename>" . $name . "</a></p>";	
+			}
 		}	
 	}
 ?>
@@ -102,6 +107,12 @@
 
 			<?php
 				$files = glob("./sp19/e*.pdf");
+				course_pop($files);
+			?>
+			<h3>Answer Keys</h3>
+
+			<?php
+				$files = glob("./sp19/a*.pdf");
 				course_pop($files);
 			?>
 	</div>
