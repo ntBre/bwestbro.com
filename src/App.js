@@ -1,5 +1,7 @@
 import React from "react"
-import NavBar from "./NavBar"
+import { Link, Switch, BrowserRouter as Router, Route } from 'react-router-dom';
+import Nav from "./Nav"
+import Home from "./Home"
 import Blog from "./Blog"
 import Pubs from "./Pubs"
 import About from "./About"
@@ -10,23 +12,29 @@ import SP19 from "./SP19"
 class App extends React.Component {
     render() {
         return (
-            <div>
-                <link
-                    rel="stylesheet"
-                    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-                    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-                    crossorigin="anonymous"
-                />
-                <NavBar />
-                <Blog />
-                <Pubs />
-                <About />
-                <SP18 />
-                <FA18 />
-                <SP19 />
+            <div className="App">
+                <Router>
+                    <div>
+                        <Nav />
+                        <Switch>
+                            <Route exactly component={Home} path="/path0" />
+                            <Route exactly component={Blog} path="/path1" />
+                            <Route exactly component={Pubs} path="/path2" />
+                            <Route exactly component={About} path="/path3" />
+                        </Switch>
+                    </div>
+                </Router>
             </div>
         )
 
     }
 }
+/*
+<Blog />
+    <Pubs />
+    <About />
+    <SP18 />
+    <FA18 />
+    <SP19 />
+    */
 export default App

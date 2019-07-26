@@ -5,7 +5,7 @@ class Blog extends React.Component {
     constructor() {
         super()
         this.state = {
-            display: false
+            display: true
         }
         this.handleClick = this.handleClick.bind(this)
     }
