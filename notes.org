@@ -1,0 +1,17 @@
+* Adding blogs
+
+** Convert html from org blogs to jsx
+   
+*** [[https://www.npmjs.com/package/html-to-react-components#usage][html-to-react-components]]
+*** command is html2react "path/to/html/file.html"
+*** generates components out of html elements with data-component="Name" in them
+    
+** Update NavBar.js 
+
+*** by importing ./blogs/components/BlogName
+*** Adding Route exact path /blog/BlogName
+
+** Update Blog.js 
+
+*** By adding LinkContainer and href with /blog/Blogname
+

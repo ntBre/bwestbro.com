@@ -30,7 +30,7 @@ class NavBar extends React.Component {
 		  <Navbar.Collapse id="basic-navbar-nav">
 		    <Nav className="mr-auto">
 		      <LinkContainer to="/">
-			<Nav.Link>Home</Nav.Link>
+			<Nav.Link href="/">Home</Nav.Link>
 		      </LinkContainer>
 		      <LinkContainer to="/blog">
 			<Nav.Link href="/blog">Blog</Nav.Link>
@@ -60,11 +60,11 @@ class NavBar extends React.Component {
 		</Navbar>
 		<Route exact path="/" component={Home} />
 		<Route exact path="/blog" component={Blog} />
-		<Route path="/publications" component={Pubs} />
-		<Route path="/about" component={About} />
-		<Route path="/sp18" component={SP18} />
-		<Route path="/fa18" component={FA18} />
-		<Route path="/sp19" component={SP19} />
+		<Route exact path="/publications" component={Pubs} />
+		<Route exact path="/about" component={About} />
+		<Route exact path="/sp18" component={SP18} />
+		<Route exact path="/fa18" component={FA18} />
+		<Route exact path="/sp19" component={SP19} />
 		<Route exact path="/blog/running-log" component={RunningLog} />
 	      </Router>
 	    </div>

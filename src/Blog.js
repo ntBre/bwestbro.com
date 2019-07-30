@@ -6,8 +6,8 @@ class Blog extends React.Component {
 	return (
 	    <div>
 	      <h1>Blog</h1>
-	      <LinkContainer to="./blog/running-log">
-		<a href="./blog/running-log">Running Log in Org-mode</a>
+	      <LinkContainer to="/blog/running-log">
+		<a href="/blog/running-log">Running Log in Org-mode</a>
 	      </LinkContainer>
 	    </div>
 	)
