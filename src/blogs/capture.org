@@ -1,0 +1,40 @@
+Org-capture
+
+To complement my running log discussed in the previous entry, I decided to experiment with org-capture.
+I set up my first capture template using the orgmode docs, but I thought it might be handy to have a 
+more thorough reference that combines the template elements page and the general capture templates page
+with a real example. The structure of an org-capture-template is as shown below:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-capture-templates
+    '((<keys> <description> <type> <target> <template> <properties>)))
+#+END_SRC
+
+As described [[https://orgmode.org/manual/Template-elements.html#Template-elements][in the docs]], =<keys>= are the keys that select for the template when you call org-capture, 
+=<description>= is just a short string describing the template, =<type>= is the type of the entry, 
+=<target>= is the location for the capture item, =<template>= is the template for creating the item,
+and =<properties>= are additional options. The template I created for my running log is below.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-capture-templates
+    '(("r" "Log a run" table-line (file+headline "~/Notes/running.org" "Log")
+        "| | %^{Day?} | %^{Distance?} | %^{Time? (HH:MM:SS)} | | %^{Route?} | %^{Notes | } |")))
+#+END_SRC
+
+I bound it to the key "r" and write to the file ~/Notes/running.org under the heading Log. At that
+point it appends a line to my table and the =%^{Prompt}= sections prompt me for what to include.  
+One problem I was having was that the capture would abort if I tried to leave a field empty. This 
+was especially important because I don't expect most of my runs to have any notes, but this was 
+easily fixed by adding a pipe to the Notes prompt. From the docs, the prompt can include a 
+default value (empty in my case), as well as possible completions separated by pipes in the format
+=%^{prompt|default|completion2|completion3...}=.
+
+There are still a couple of things missing from this. The first is the problem associated with a 
+new week, at which point I will need another entry in the first cell, and the second is rerunning
+the pace calculation to fill that cell. However, these are not really that important and can be 
+fixed easily by editing the file directly. The first problem could also be fixed by prompting also 
+for the week, but the number of prompts was already high enough that I did not want to add another for
+something I would use only once a week. Overall, I will definitely be playing more with org-capture,
+especially once I have a well-established todo list because it seems super handy to quickly append 
+something to a file without having to find it first. Additionally, I will probably add a hotkey for
+org-capture so I don't have to run M-x org-capture each time.

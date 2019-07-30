@@ -1,10 +1,5 @@
 import React from "react"
-import { Link, Switch, BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import NavBar from "./NavBar"
-import Home from "./Home"
-import Blog from "./Blog"
-import Pubs from "./Pubs"
-import About from "./About"
 
 class App extends React.Component {
     render() {

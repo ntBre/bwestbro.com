@@ -1,6 +1,6 @@
 import React from "react"
-import { Form, Button, NavDropdown, Navbar, Nav, FormControl } from 'react-bootstrap';
-import { Link, Switch, BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { NavDropdown, Navbar, Nav } from 'react-bootstrap';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { LinkContainer } from "react-router-bootstrap";
 import Home from "./Home"
 import Blog from "./Blog"
@@ -50,7 +50,9 @@ class NavBar extends React.Component {
                                     <LinkContainer to="sp19">
                                         <NavDropdown.Item>CHEM 2327</NavDropdown.Item>
                                     </LinkContainer>
-                                    <NavDropdown.Divider />
+            {//  <NavDropdown.Divider />
+                // remove divider from dropdown menu
+            }
                                 </NavDropdown>
                             </Nav>
                         </Navbar.Collapse>
