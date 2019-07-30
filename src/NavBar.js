@@ -1,7 +1,7 @@
 import React from "react"
 import { NavDropdown, Navbar, Nav } from 'react-bootstrap';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { LinkContainer } from "react-router-bootstrap";
+import { IndexLinkContainer } from "react-router-bootstrap";
 import Home from "./Home"
 import Blog from "./Blog"
 import Pubs from "./Pubs"
@@ -23,34 +23,34 @@ class NavBar extends React.Component {
 	      />
 	      <Router>
 		<Navbar bg="light" expand="lg">
-		  <LinkContainer to="/">
-		    <Navbar.Brand>Brent Westbrook</Navbar.Brand>
-		  </LinkContainer>
+		  <IndexLinkContainer to="/">
+		    <Navbar.Brand href="/">Brent Westbrook</Navbar.Brand>
+		  </IndexLinkContainer>
 		  <Navbar.Toggle aria-controls="basic-navbar-nav" />
 		  <Navbar.Collapse id="basic-navbar-nav">
 		    <Nav className="mr-auto">
-		      <LinkContainer to="/">
+		      <IndexLinkContainer to="/">
 			<Nav.Link href="/">Home</Nav.Link>
-		      </LinkContainer>
-		      <LinkContainer to="/blog">
+		      </IndexLinkContainer>
+		      <IndexLinkContainer to="/blog">
 			<Nav.Link href="/blog">Blog</Nav.Link>
-		      </LinkContainer>
-		      <LinkContainer to="/publications">
+		      </IndexLinkContainer>
+		      <IndexLinkContainer to="/publications">
 			<Nav.Link href="/pubs">Publications</Nav.Link>
-		      </LinkContainer>
-		      <LinkContainer to="/about">
+		      </IndexLinkContainer>
+		      <IndexLinkContainer to="/about">
 			<Nav.Link href="/about">About</Nav.Link>
-		      </LinkContainer>
+		      </IndexLinkContainer>
 		      <NavDropdown title="Courses" id="basic-nav-dropdown">
-			<LinkContainer to="/sp18">
+			<IndexLinkContainer to="/sp18">
 			  <NavDropdown.Item>CHEM 2320</NavDropdown.Item>
-			</LinkContainer>
-			<LinkContainer to="fa18">
+			</IndexLinkContainer>
+			<IndexLinkContainer to="fa18">
 			  <NavDropdown.Item>CHEM 2320</NavDropdown.Item>
-			</LinkContainer>
-			<LinkContainer to="sp19">
+			</IndexLinkContainer>
+			<IndexLinkContainer to="sp19">
 			  <NavDropdown.Item>CHEM 2327</NavDropdown.Item>
-			</LinkContainer>
+			</IndexLinkContainer>
 			{//  <NavDropdown.Divider />
 			    // remove divider from dropdown menu
 			}
