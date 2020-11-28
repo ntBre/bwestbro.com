@@ -1,0 +1,221 @@
+<p>
+  If you're familiar with the shell, you've probably come across the
+  concept of "piping" commands into each other.  A frequently-used
+  example of this is looking for a process in <code>ps</code> by
+  running <code>grep</code> on the resulting output:
+</p>
+
+<div class=code>
+  $ ps aux | grep process-name
+</div>
+
+<p>
+  This pattern is exceptionally useful and comes up in numerous
+  situations when working in the shell. However, sometimes you run into
+  scenarios where you really need multiple pipelines at once or need to
+  combine the output from several different commands. One option is
+  always to redirect the output from one of the pipelines into a
+  temporary file, but it can be nice to avoid this when possible. This
+  is where process substitution and the <code>tee</code> command can
+  come into play.
+</p>
+
+<h3 class=sub>Process substitution</h3>
+
+<p>
+  Much as the name indicates, process substitution allows you to
+  substitute the results from one process as a file for a command.
+  The syntax for this is very similar to normal redirection of stdin
+  and stdout, but with the addition of parentheses. One of my frequent
+  uses for process substitution is combining columns of output from
+  different commands with the <code>paste</code> command. If you don't know,
+  the paste command "merges lines of files" according to its man page.
+  For example, if I have file a:
+</p>
+
+<div class=code>
+  1 <br> 2 <br> 3 <br> 4 <br> 5
+</div>
+
+<p>and a similar file b:</p>
+
+<div class=code>
+  6 <br> 7<br>  8<br>  9<br>  10
+</div>
+
+<p>
+  I can combine them together with <code>paste a b</code> to get
+</p>
+<div class=code>
+  1 6 <br> 2 7 <br> 3 8 <br> 4 9 <br> 5 10 <br>
+</div>
+
+<p>
+  This is obviously a useful command on its own, but what if I only want to paste
+  together a certain column from a multi-column file? Or what if I want to use
+  AWK to modify the columns in some way before pasting them together?
+  This is where process substitution comes in.
+</p>
+
+<p>
+  Let's stick with the second of these situations for now, and assume we want to
+  multiply the values in file a by 5 and those in file b by 2. One way of doing this
+  is
+</p>
+
+<div class=code>
+  paste &lt;( awk '{print $1*5}' a ) &lt;( awk '{print $1*2}' b )
+</div>
+
+<p> which results in the output below. </p>
+<div class=code>
+  &nbsp;5       12 <br>
+  10      14 <br>
+  15      16 <br>
+  20      18 <br>
+  25      20 <br>
+</div>
+
+<p>
+  One thing to make explicit is that process substitution is a feature
+  of bash, not shells in general, at least with the syntax I have
+  described here. I can only speak for the three I tried, bash, fish,
+  and sh, but of those at least only bash utilized the syntax
+  described above. The main time I have run into trouble with this is
+  when writing a shell script and trying to use <code>#!/bin/sh</code>
+  as my shebang line, but if you use a shell other than bash as your
+  default shell you will likely have trouble as well.
+</p>
+
+<h3 class=sub>tee</h3>
+
+<p>
+  So that's process substitution, but what's this <code>tee</code>
+  thing?  According to its man page, <code>tee</code> allows you to
+  "read from standard input and write to standard output <em>and</em> files."
+  I've added emphasis here to focus on the really useful part of the command.
+  Whereas normal pipelines have one way in and one way out, the aptly named
+  <code>tee</code> acts just like a tee joint in a physical pipeline,
+  allowing you to redirect information flow in multiple directions. A
+  basic use in a variant of our first example command would log all
+  running processes, while also continuing on to look for a certain one.
+</p>
+
+<div class=code>
+  $ ps aux | tee ps.log | grep process-name
+</div>
+
+<p>
+  This writes the file ps.log with the full output from <code>ps</code>
+  while also piping that full output on to <code>grep</code>, which will
+  direct its output to stdout as usual.
+</p>
+
+<h3 class=sub>Combining the two</h3>
+
+<p>
+  What prompted this post was working on a script to summarize the output
+  from the <code>qstat</code> command on one of our clusters, which basically just
+  reports information about the running jobs. By default it returns information
+  about all users, which you can filter down to only your username with the
+  <code>-u</code> flag, but since I'm searching for stuff anyway, and
+  I'm in the middle of reading <em>The AWK Programming Language</em>,
+  I went ahead and searched for my username anyway with the help of
+  AWK.
+</p>
+<div class=code>
+  <pre>qstat | awk 'BEGIN {q = r = e =0} FNR == 1 {print} \
+    (/USER/ && / [QRE] /) {if (/Q/) q++; if (/R/) r++; \
+    if (/E/) e++; print} END \
+    {printf "%d in queue\n%d running\n%d exiting\n", q, r, e}' \
+    | tee >( head -n -3 ) >( tail -n 3 ) > /dev/null</pre>
+</div>
+
+<p>
+  The AWK part of this is not that interesting or at least the topic of a separate
+  post, so let us focus on the <code>tee</code> part.
+</p>
+<div class=code>
+  tee >( head -n -3 ) >( tail -n 3 ) > /dev/null
+</div>
+
+<p>
+  As we saw above, process substitution can be used to substitute the
+  output from a command for a file used as the standard input for
+  another command. However, you can also substitute a process for a
+  file being used to catch the standard output from a command. That is
+  what is happening here. <code>tee</code> writes what was piped into
+  it to the files <code>head -n -3</code> and <code>tail -n 3</code>,
+  which print all but the last three lines and the last three lines of
+  the pipeline respectively.
+</p>
+
+<p>
+  To make this a little more clear, the output of the AWK command on its own
+  looks something like
+</p>
+
+<div class=code>
+  Job id            Name             User              Time Use S Queue <br>
+  12345            jobName           brent             00:00    R Q1 <br>
+  0 in queue <br>
+  0 running <br>
+  0 exiting
+</div>
+
+<p>
+  because counting up how many jobs are in queue, running, and exiting
+  cannot finish until all of the input lines have been read, and by
+  then there is no way to write it to the top of the output with AWK*.
+  My earlier version of this script embarassingly ran
+  multiple <code>qstat</code> commands and gathered the output into
+  variables that were then printed at the end. While this version is
+  not formatted very well and looks kind of rough, it runs three times
+  faster than that one, while also providing more information.
+</p>
+
+<p>
+  The output after the <code>tee</code> line is 
+</p>
+
+<div class=code>
+  0 in queue <br>
+  0 running <br>
+  0 exiting <br>
+  Job id            Name             User              Time Use S Queue <br>
+  12345            jobName           brent             00:00    R Q1 <br>
+</div>
+
+<p>
+  which may look like a small change, but is actually exactly what I was looking for
+  since I often have many hundreds or thousands of jobs in the queue and only want to see
+  the oldest ones, which are actually running and end up at the top. Now when I pipe the
+  output of the script into <code>head</code> I can see the summary, as well as the jobs
+  most likely to finish soon.
+</p>
+
+<p>
+  The last part of the <code>tee</code> command is
+  probably embarassing for me.  My understanding of <code>tee</code>
+  made me think I could substitute one of the <code>head</code>
+  or <code>tail</code> commands and just pipe into the other like
+  normal:
+</p>
+
+<div class=code>
+  | tee >( head -n -3 ) | tail -n 3
+</div>
+
+<p>
+  Unfortunately, I have not been able to get the same output this way,
+  and that also leaves me with some weird behavior that I managed to
+  avoid by directing the "rest" to /dev/null. So if you know what I am
+  doing wrong, feel free to shoot me an email!
+</p>
+
+<h3 class=sub>Footnotes</h3>
+
+<p>
+  *As I now know, you could save the output to an array in AWK and
+  loop through the array to print the lines at the end.
+</p>

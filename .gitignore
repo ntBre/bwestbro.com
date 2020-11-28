@@ -1,3 +1,5 @@
-./node_modules/
-/.projectile
-node_modules/
+*~
+*#
+*@
+.gitignore
+notes.org

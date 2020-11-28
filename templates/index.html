@@ -1,0 +1,47 @@
+{{define "indexPage"}}
+<html>
+{{template "header"}}
+  <body>
+    <h1>Brent Westbrook</h1>
+    {{template "navbar"}}
+    <h2>bwestbro.com</h2>
+    
+    <h3 id="welcome">Welcome!</h3>
+
+    <p>
+
+      My name is Brent Westbrook, and I am currently a PhD student in
+      chemistry at the University of Mississippi. I am exclusively a
+      computational chemist, so I spend at least as much of my time with
+      computers as with chemistry. As a result, I occasionally have
+      interesting things to share about computers here or on my upcoming
+      Youtube channel. Hopefully it will forthcoming for less time than the
+      James Webb Space Telescope.
+
+    </p>
+
+    <p>
+
+      I was also a general chemistry Supplemental Instruction leader for
+      four semesters and wrote many worksheets during that time, so I also
+      have them accessible here.
+
+    </p>
+
+    <h3><a class="entry" href="/pub">Recent Publications</a></h3>
+    {{template "pubs" .Pubs}}
+
+    <h3><a class="entry" href="/blog">Recent Blog Posts</a></h3>
+    {{template "blogs" .Blog}}
+
+    <h3 id="sheets" class="entry">Old Worksheets</h3>
+    <h4><a class="sub" href="/sp18">Spring 2018 - CHEM 2320 (Gen. Chem. 2)</a></h4>
+    <h4><a class="sub" href="/fa18">Fall 2018 - CHEM 2320 (Gen. Chem. 2)</a></h4>
+    <h4><a class="sub" href="/sp19">Spring 2019 - CHEM 2327 (Quant.)</a></h4>
+
+    <h3 id="misc" class="entry">Miscellaneous Resources</h3>
+    <h4><a class="sub" href="/misc/qff.pdf">Quartic Force Field Presentation</a></h4>
+
+  </body>
+</html>
+{{end}}

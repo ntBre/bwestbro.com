@@ -1,0 +1,45 @@
+[
+    {
+	"Authors": "M. B. Gardner, B. R. Westbrook, R. C. Fortenberry, and T. J. Lee",
+	"Title": "Highly-Accurate Quartic Force Fields for the Prediction of Anharmonic Rotational Constants and Fundamental Vibrational Frequencies",
+	"Journal": "Spectrochim. Acta A",
+	"Status": "(accepted)",
+	"Year": null,
+	"DOI": "10.1016/j.saa.2020.119184"
+    },
+    {
+	"Authors": "M. B. Gardner, B. R. Westbrook, and R. C. Fortenberry",
+	"Title": "Spectral Characterization for Small Clusters of Silicon and Oxygen: SiO<sub>2</sub>, SiO<sub>3</sub>, Si<sub>2</sub>O<sub>3</sub>, Si<sub>2</sub>O<sub>4</sub>",
+	"Journal": "Planet. Space Sci.",
+	"Year": 2020,
+	"DOI": "10.1016/j.pss.2020.105076"
+    },
+    {
+	"Authors": "B. R. Westbrook, W. A. Del Rio, T. J. Lee, and R. C. Fortenberry",
+	"Title": "Overcoming the Out-of-Plane Bending Issue in an Aromatic Hydrocarbon: The Anharmonic Vibrational Frequencies of c-(CH)C<sub>3</sub>H<sub>2</sub><sup>+</sup>",
+	"Journal": "PCCP", 
+	"Year": 2020,
+	"DOI": "10.1039/D0CP01889A"
+    },
+    {
+	"Authors":"B. R. Westbrook and R. C. Fortenberry",
+	"Title": "Anharmonic Frequencies of (MO)<sub>2</sub> & Related Hydrides for M = Mg, Al, Si, P, S, Ca, & Ti and Heuristics for Predicting Anharmonic Corrections of Inorganic Oxides",
+	"Journal": "J. Phys. Chem. A",
+	"Year": 2020,
+	"DOI": "10.1021/acs.jpca.0c01609"
+    },
+    {
+	"Authors": "R. C. Fortenberry, Tarek Trabelsi, B. R. Westbrook, W. A. Del Rio, and J. S. Francisco",
+	"Title": "Communication: Molecular Oxygen Generation from the Reaction of Water Cations with Oxygen Atoms",
+	"Journal": "J. Chem. Phys.",
+	"Year": 2019,
+	"DOI": "10.1063/1.5102073"
+    },
+    {
+	"Authors": "B. R. Westbrook, K. D. Dreux, G. S. Tschumper, J. S. Francisco, and R. C. Fortenberry",
+	"Title": "Binding of the Atomic Cations Hydrogen through Argon to Water and Hydrogen Sulfide",
+	"Journal": "PCCP",
+	"Year": 2018,
+	"DOI": "10.1039/C8CP05378B"
+    }
+]

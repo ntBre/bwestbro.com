@@ -1,3 +1,119 @@
-body {
+html {
+    height: auto;
+    min-height:100%;
+    margin: 50px;
+    padding-top: 10px; 
     background-image : linear-gradient(rgb(0,0,255,0.5), white);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
+
+body {
+    padding-top: 20px; 
+    padding-bottom: 20px; 
+    max-width: 1050px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(255,255, 255, 1);
+    box-shadow: 0px 0px 13px 6px rgba(0, 0, 0, 0.75);
+    background-color: #2e3434;
+}
+
+/* navbar from w3schools*/
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #444;
+}
+
+li {
+  float: left;
+  border-right: 1px solid #bbb;
+}
+
+li:last-child {
+    border-right: none;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+    text-decoration: none;
+  background-color: #111;
+}
+/* end navbar */
+
+h1 {
+    padding-top: 10px;
+    text-align: center;
+    color: #6ac214;
+}
+
+h2 {
+    text-align: center;
+    color: #6ac214;
+}
+
+h3 {
+    padding-left: 40px;
+}
+
+h4 {
+    padding-left: 40px;
+}
+
+#welcome {
+    color: #edd400;
+}
+
+p {
+    padding-left: 40px;
+    padding-right: 40px;
+    color: #FFFFFF;
+}
+
+.entry {
+    color: #e090d7;
+}
+
+.doi {
+    color: #FFFFFF;
+}
+
+.sub {
+    color: #FFFFFF;
+}
+
+a:link {
+    text-decoration: none;
+}
+a:visited {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:active {
+    text-decoration: none;
+}
+
+.code {
+    font-family: "Lucida Console", Courier, monospace;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: #DFDFDF;
+    margin-left: 50px;
+    margin-right: 50px;
+    border: 10px;
+}
+

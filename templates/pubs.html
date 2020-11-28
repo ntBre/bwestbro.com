@@ -1,0 +1,15 @@
+{{define "pubs"}}
+{{range $i, $e := .Items}}
+<p>
+  ({{$i}}) {{.Authors}}. "{{.Title}}." <em>{{.Journal}}</em>,
+  {{if .Year}}
+  {{.Year}}.
+  {{else}}
+  ({{.Status}}).
+  {{end}}
+  {{if .DOI}}
+  DOI: <a class=doi href=https://doi.org/{{.DOI}}>{{.DOI}}</a>.
+  {{end}}
+</p>
+{{end}}
+{{end}}

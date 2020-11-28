@@ -1,0 +1,81 @@
+[
+    {
+	"Title": "Error",
+	"Filename": "worksheets/fa18/w01-Error.pdf"
+    },
+    {
+	"Title": "Spectroscopy",
+	"Filename": "worksheets/fa18/w02-Spectroscopy.pdf"
+    },
+    {
+	"Title": "Beer's Law",
+	"Filename": "worksheets/fa18/w03-Beer's-Law.pdf"
+    },
+    {
+	"Title": "Instrumental Calibration",
+	"Filename": "worksheets/fa18/w04-Instrumental-Calibration.pdf"
+    },
+    {
+	"Title": "Quality Assurance",
+	"Filename": "worksheets/fa18/w05-Quality-Assurance.pdf"
+    },
+    {
+	"Title": "Reaction Rates",
+	"Filename": "worksheets/fa18/w06-Reaction-Rates.pdf"
+    },
+    {
+	"Title": "Differential Rate Laws",
+	"Filename": "worksheets/fa18/w07-Differential-Rate-Laws.pdf"
+    },
+    {
+	"Title": "Integrated Rate Laws",
+	"Filename": "worksheets/fa18/w08-Integrated-Rate-Laws.pdf"
+    },
+    {
+	"Title": "Equilibrium",
+	"Filename": "worksheets/fa18/w09-Equilibrium.pdf"
+    },
+    {
+	"Title": "Acids and Bases",
+	"Filename": "worksheets/fa18/w10-Acids-and-Bases.pdf"
+    },
+    {
+	"Title": "Ionization",
+	"Filename": "worksheets/fa18/w11-Ionization.pdf"
+    },
+    {
+	"Title": "Distribution",
+	"Filename": "worksheets/fa18/w12-Distribution.pdf"
+    },
+    {
+	"Title": "Buffers",
+	"Filename": "worksheets/fa18/w13-Buffers.pdf"
+    },
+    {
+	"Title": "Titrations",
+	"Filename": "worksheets/fa18/w14-Titrations.pdf"
+    },
+    {
+	"Title": "Redox",
+	"Filename": "worksheets/fa18/w15-Redox.pdf"
+    },
+    {
+	"Title": "Chromatography",
+	"Filename": "worksheets/fa18/w16-Chromatography.pdf"
+    },
+    {
+	"Title": "Exam 1 Review",
+	"Filename": "worksheets/fa18/e1.pdf",
+	"Type": "Exam"
+    },
+    {
+	"Title": "Exam 2 Review",
+	"Filename": "worksheets/fa18/e2.pdf",
+	"Type": "Exam"
+    },
+    {
+	"Title": "Exam 3 Review",
+	"Filename": "worksheets/fa18/e3.pdf",
+	"Type": "Exam"
+    }
+]

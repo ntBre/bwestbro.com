@@ -1,0 +1,18 @@
+{{define "worksheets"}}
+<html>
+  {{template "header"}}
+  <body>
+    <h1>Worksheets</h1>
+    {{template "navbar"}}
+    {{range $i, $e := .Items}}
+    <p>
+      <a class=sub href={{.Filename}}>
+	{{if ne .Type "Exam"}}
+	Worksheet {{$i}} -
+	{{end}}
+	{{.Title}}</a>
+    </p>
+    {{end}}
+  </body>
+</html>
+{{end}}

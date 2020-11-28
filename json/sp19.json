@@ -1,0 +1,76 @@
+[
+    {
+	"Title": "Stoichiometry",
+	"Filename": "worksheets/sp19/w01-Stoichiometry.pdf"
+    },
+    {
+	"Title": "Spectroscopy",
+	"Filename": "worksheets/sp19/w02-Spectroscopy.pdf"
+    },
+    {
+	"Title": "Spectroscopy II",
+	"Filename": "worksheets/sp19/w03-Spectroscopy-II.pdf"
+    },
+    {
+	"Title": "Spectroscopy III",
+	"Filename": "worksheets/sp19/w04-Spectroscopy-III.pdf"
+    },
+    {
+	"Title": "Sample Preparation",
+	"Filename": "worksheets/sp19/w05-Sample-Preparation.pdf"
+    },
+    {
+	"Title": "Error",
+	"Filename": "worksheets/sp19/w06-Error.pdf"
+    },
+    {
+	"Title": "Statistics",
+	"Filename": "worksheets/sp19/w07-Statistics.pdf"
+    },
+    {
+	"Title": "Statistics II",
+	"Filename": "worksheets/sp19/w08-Statistics-II.pdf"
+    },
+    {
+	"Title": "Statistics III",
+	"Filename": "worksheets/sp19/w09-Statistics-III.pdf"
+    },
+    {
+	"Title": "Statistics IV",
+	"Filename": "worksheets/sp19/w10-Statistics-IV.pdf"
+    },
+    {
+	"Title": "Spectrophotometry",
+	"Filename": "worksheets/sp19/w11-Spectrophotometry.pdf"
+    },
+    {
+	"Title": "Quality Assurance",
+	"Filename": "worksheets/sp19/w12-Quality-Assurance.pdf"
+    },
+    {
+	"Title": "Final Exam Review I",
+	"Filename": "worksheets/sp19/w13-Final-Exam-Review-I.pdf"
+    },
+    {
+	"Title": "Final Exam Review II",
+	"Filename": "worksheets/sp19/w14-Final-Exam-Review-II.pdf"
+    },
+    {
+	"Title": "Final Exam Review III",
+	"Filename": "worksheets/sp19/w15-Final-Exam-Review-III.pdf"
+    },
+    {
+	"Title": "Final Exam Review IV",
+	"Filename": "worksheets/sp19/w16-Final-Exam-Review-IV.pdf"
+    },
+    {
+	"Title": "Exam 1 Review",
+	"Filename": "worksheets/sp19/e1.pdf",
+	"Type": "Exam"
+    },
+    {
+	"Title": "Exam 2 Review",
+	"Filename": "worksheets/sp19/e2.pdf",
+	"Type": "Exam"
+    }
+]

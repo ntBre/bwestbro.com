@@ -1,0 +1,53 @@
+[
+    {
+	"Title": "Kinetics",
+	"Filename": "worksheets/sp18/w01-Kinetics.pdf"
+    },
+    {
+	"Title": "Equilibrium",
+	"Filename": "worksheets/sp18/w02-Equilibrium.pdf"
+    },
+    {
+	"Title": "pH",
+	"Filename": "worksheets/sp18/w03-pH.pdf"
+    },
+    {
+	"Title": "Salts",
+	"Filename": "worksheets/sp18/w04-Salts.pdf"
+    },
+    {
+	"Title": "Buffers",
+	"Filename": "worksheets/sp18/w05-Buffers.pdf"
+    },
+    {
+	"Title": "More Buffers",
+	"Filename": "worksheets/sp18/w06-More-Buffers.pdf"
+    },
+    {
+	"Title": "Titrations",
+	"Filename": "worksheets/sp18/w07-Titrations.pdf"
+    },
+    {
+	"Title": "More Titrations",
+	"Filename": "worksheets/sp18/w08-More-Titrations.pdf"
+    },
+    {
+	"Title": "Electrochemistry",
+	"Filename": "worksheets/sp18/w09-Electrochemistry.pdf"
+    },
+    {
+	"Title": "Exam 2 Review",
+	"Filename": "worksheets/sp18/e2.pdf",
+	"Type": "Exam"
+    },
+    {
+	"Title": "Exam 3 Review",
+	"Filename": "worksheets/sp18/e3.pdf",
+	"Type": "Exam"
+    },
+    {
+	"Title": "Exam 4 Review",
+	"Filename": "worksheets/sp18/e4.pdf",
+	"Type": "Exam"
+    }
+]

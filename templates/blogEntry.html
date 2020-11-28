@@ -1,0 +1,13 @@
+{{define "blogEntry"}}
+<html>
+  {{template "header"}}
+  <body>
+    <h1>Blogs</h1>
+    {{template "navbar"}}
+    <h2>{{.Title}}</h2>
+    <p>
+      {{.Content}}
+    </p>
+  </body>
+</html>
+{{end}}

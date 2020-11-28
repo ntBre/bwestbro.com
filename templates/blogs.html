@@ -1,0 +1,7 @@
+{{define "blogs"}}
+{{range .Items}}
+<p>
+  <a class=sub href={{.Filename}}>{{.Date}} - {{.Title}}</a>
+</p>
+{{end}}
+{{end}}
