@@ -161,6 +161,9 @@ func main() {
 	// different endpoints for different blog posts?
 	// need some part of blog struct to identify, hash maybe on the title
 	http.HandleFunc("/", indexHandler)
+
+	go http.ListenAndServeTLS(":443", "/etc/letsencrypt/live/bwestbro.com/fullchain.pem",
+		"/etc/letsencrypt/live/bwestbro.com/privkey.pem", nil)
 	log.Fatal(http.ListenAndServe(*host, nil))
 }
 
