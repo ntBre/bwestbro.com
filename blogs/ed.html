@@ -1,0 +1,138 @@
+<!---
+(zap "" "ed")
+title: ed: the standard text editor
+--->
+<p><code>ed</code> is a precursor to editors like <code>vi</code> that is focused on editing lines of text. A typical session for someone new to using <code>ed</code> might look something like this:</p>
+<pre><div class=code>
+$ ed
+help
+?
+quit
+?
+exit
+?
+?
+?</div></pre>
+<p>By default <code>ed</code> has no prompt and typing “help” offers you no assistance. Like <code>vi</code> or <Code>Vim</Code>, it can even be hard to exit. However, <code>ed</code> is a useful tool for editing the output of commands. You can use it as a standalone text editor, but I find little reason to do that. Rather, I use it primarily to edit the output of other commands in a pipeline, especially when I’m working in Emacs Org mode.</p>
+<p>Below is a quick example of a real <code>ed</code> session:</p>
+<pre><div class=code>$ ed test.txt
+test.txt: No such file or directory
+a
+this is a line
+this is another
+time to save and exit
+.
+w
+53
+q</div></pre>
+<p>First, you can see <code>ed</code> complain at me that the file doesn’t exist. Like <Code>Vim</Code>, however, once I’m in the file, I can append to it with the <code>a</code> command. Then, you can see the three lines I typed into the file displayed directly onto the screen. Instead of pressing Escape like <code>vi</code> or <Code>Vim</Code>, you exit insert mode by typing just a period on a line. Then I write the file with <code>w</code>, which displays the number of characters written, before exiting with <code>q</code>.</p>
+<p>As you may notice, <code>ed</code> probably works best when you are creating a new file or when you are very familiar with the contents of an existing file. You can print the contents of a file using the <code>,p</code> command, which takes advantage of the fact that ranges default to start at the first line and end at the last line. In other words that command is equivalent to <code>1,$p</code>, where 1 is the first line and <code>$</code> is the way to denote the last line. Again, this type of range should be familiar if you have used <code>vi</code> or <Code>Vim</Code>.</p>
+<p>You can also use the <code>-p</code> flag to set a prompt to make the session a little more clear. Here you can see the effects of setting the prompt along with the <code>p</code> command and the <code>n</code> command, which prefixes the line by its line number.</p>
+<pre><div class=code>$ ed -p &quot;ed&gt; &quot; test.txt
+53
+ed&gt; ,p
+this is a line
+this is another
+time to save and exit
+ed&gt; n
+3       time to save and exit
+ed&gt;</div></pre>
+<p><code>ed</code> has many other commands that I’m not even familiar with, but most of them should be at least vaguely familiar if you use <Code>Vim</Code>. Now, what I really want to show off here is the ability to use <code>ed</code> as a part of pipelines. To reach back to my <a href="/blogs/tee.html">last blog post</a> on using <code>tee</code> and process substitution in Bash, what I used <code>tee</code> for there was to do some very awkward wrangling of my script’s output with <code>head</code> and <code>tail</code>. All I really wanted to do was move three lines from the bottom of the output to the top, and I could not find a good way to do it. I know now that I could have used AWK arrays to store the lines for printing, printed the header, and then looped through the array to print the job lines. But that’s not a good way to learn to use <code>ed</code>!</p>
+<p>Here is the command I ended up going with at the end of that post:</p>
+<pre><div class=code>qstat | awk &#39;BEGIN {q = r = e = 0} FNR == 1 {print} \
+    (/USER/ &amp;&amp; / [QRE] /) {if (/Q/) q++; if (/R/) r++; \
+    if (/E/) e++; print} END \
+    {printf &quot;%d in queue\n%d running\n%d exiting\n&quot;, q, r, e}&#39; \
+    | tee &gt;( head -n -3 ) &gt;( tail -n 3 ) &gt; /dev/null</div></pre>
+<p><code>tee</code> is ob<code>vi</code>ously not the right tool for the job (but it did give me an opportunity to learn to use it), as I am ha<code>vi</code>ng to redirect part of its output to /dev/null. Instead, I can easily use <code>ed</code> for this. One of the <code>ed</code> commands I did not mention yet is the <code>m</code> command, which moves a line somewhere else and sounds quite promising for what I want. The output I was getting in the last post from the <code>awk</code> portion looked like</p>
+<pre><div class=code>Job id Name User Time Use S Queue
+12345 jobName brent 00:00 R Q1
+0 in queue
+0 running
+0 exiting</div></pre>
+<p>And I wanted the summary of which jobs were in queue, running, and exiting at the top for the cases where I have hundreds of jobs running and just want to pipe the whole thing into <code>head</code> to see the oldest ones. As an aside, <code>ed</code> also allows you to match lines by regular expressions rather that by numbers. I believe this is the origin of the name of the <code>grep</code> command since the syntax for doing this kind of search and printing the result in <code>ed</code> is <code>g/re/p</code>, where <code>re</code> is a regular expression. Like in <Code>Vim</Code>, the <code>g</code> denotes a global search, the slashes delimit the regular expression, and <code>p</code> is the print command we already saw.</p>
+<p>Anyway, what I wanted to do was grab the last three lines and move them to the top, so the regular expression matching was actually irrelevant for me then but will come in handy in another example. The <code>ed</code> command I need to run is <code>$-2,$m0</code>, where <code>$</code> again is the last line, the <code>-2</code> is a negative offset from <code>$</code> to select the third to last line, the comma lets me build a range, <code>m</code> is the move command, and <code>0</code> is where I want to put it. You can’t jump to line 0 in <code>ed</code>, but if you want to put something before the real first line, you are allowed to move it to the zeroth.</p>
+<p>Now, the problem I had was how to get it into <code>ed</code>. The example I’ve shown you so far was straightforward enough because you just open <code>ed</code> like any other text editor and go to work. This may not sound like a problem because you probably know we can pipe the output of a command into a text editor. However, the issue is that we also need to pipe in a list of commands for <code>ed</code> to run, in this case <code>$-2,$m0</code>. Since I was in a process substitution mood when first working on this, the command I came up with involved putting the whole <code>qstat</code> and <code>awk</code> pipeline into a process substitution as the input to the ed command like</p>
+<div class=code>ed &lt;( qstat | awk ... )</div>
+<p>and piping the move command into <code>ed</code> from the other side. This turned out to be a decent approach, but I had some trouble with it as well. My first attempt looked like</p>
+<div class=code>echo &quot;$-2,$m0&quot; | ed &lt;( qstat | awk ... )</div>
+<p>If you are a bash expert, you will pretty rightly be making fun of me right now, but I just could not figure out what the problem was! I actually made a StackExchange post asking for help because I got so frustrated. Fortunately, the users there set me straight and reminded me that double quotes allow bash to substitute variables, while single quotes do not. This is a problem because variables in bash are referenced with the <code>$</code>, so here I am really gi<code>vi</code>ng <code>ed</code> the command <code>himBHs2,</code> because <code>$-</code> contains the options for the current shell, which accounts for the <code>himBHs</code> part, the <code>2,</code> are not part of the variable expansion, so they are passed verbatim, and then <code>$m0</code> is an empty variable, so it is printed as nothing.</p>
+<p>As I mentioned before, replacing the double quotes with single quotes will fix the problem, and the command</p>
+<div class=code>echo &#39;$-2,$m0&#39; | ed &lt;( qstat | awk ... )</div>
+<p>does almost do what I want. There are actually a couple more pieces you might remember from the interactive <code>ed</code> sessions earlier. Namely, we need to actually print the lines after mo<code>vi</code>ng them to their new positions, and then we need to exit. One thing to point out is that the <code>ed</code> analog of <Code>Vim</Code>’s <code>q!</code> or quit and discard changes command is <code>Q</code>, which I will use here since I just want to print the results and then discard them. So the real command using <code>echo</code> looks like</p>
+<div class=code>echo -e &#39;$-2,$m0\n,p\nQ&#39; | ed &lt;( qstat | awk ... )</div>
+<p>where I have had to use the <code>-e</code> flag to enable the interpretation of escape sequences. Apparently this is not portable or something because the people on StackExchange said it was better to use <code>printf</code> for this. <code>printf</code> is pretty nice too because you can give it one format string and it will apply it to all the other arguments you pass, so using <code>printf</code> the command becomes</p>
+<div class=code>printf &quot;%s\n&quot; &#39;$-2,$m0&#39; &#39;,p&#39; &#39;Q&#39; | ed &lt;( qstat | awk ... )</div>
+<p>That’s the version currently in my script on the computer system I wanted that script for. However, in looking at <code>ed</code>’s fairly limited manual page in attempting to use it again the other day, I noticed that it actually takes the <code>!</code> option at the command line, allowing it to read the output of a shell command, much like in <Code>Vim</Code>. With that in mind, I could actually dispense with the process substitution and make the final command</p>
+<div class=code>printf &quot;%s\n&quot; &#39;$-2,$m0&#39; &#39;,p&#39; &#39;Q&#39; | ed -s &#39;!qstat | awk ...&#39;</div>
+<p>where I have also added the <code>-s</code> flag to suppress the usual diagnostic messages printed by <code>ed</code>. I think the main annoying one is the number of characters read in initially. There seems to be no difference in speed between the two of these, but I find the version without process substitution a bit more ergonomic, and that should make it portable to shells without process substitution built in. With reference to portability, I should emphasize the potential importance of the <code>'! ... '</code> scheme. On the computer this script was meant for and within my Org source blocks, I actually used <code>!"..."</code>, but that is not working for me within my actual terminal. If you run into trouble, you may need to play with these different quoting schemes. If the command you are running does not involve a pipe, I think you can get away without quoting at all.</p>
+<p>Now, for a quick example using <code>ed</code>’s regular expression matches, I have another real use of <code>ed</code> that came up in building some data tables for a paper I was working on. One of our collaborators sent a fairly complex directory, and I was supposed to search through it, grab the important values, and format them into tables for our Supplemental Information. Of course I was working in Emacs and specifically in Org mode since I like how easy it is to modify Org tables and then export them to LaTeX. As a result, I created an Org shell code block and went to work. First I had to find the frequency output files using the <code>find</code> command:</p>
+<pre><div class=code>$ find . -iname &quot;freq.out&quot;
+./cc-pV5Z/MP2/freq.out
+./aug-cc-pVDZ/MP2/freq.out
+./cc-pVDZ/MP2/freq.out
+./aug-cc-pVTZ/MP2/freq.out
+./cc-pCVDZ/MP2_fc/freq.out
+./cc-pCVDZ/MP2/freq.out
+./aug-cc-pV5Z/MP2/freq.out
+./cc-pCVQZ/MP2_fc/freq.out
+./cc-pCVQZ/MP2/freq.out
+./cc-pCV5Z/MP2_fc/freq.out
+./cc-pCV5Z/MP2/freq.out
+./cc-pV6Z/MP2/freq.out
+./cc-pCVTZ/MP2_fc/freq.out
+./cc-pCVTZ/MP2/freq.out
+./cc-pVTZ/MP2/freq.out
+./aug-cc-pVQZ/MP2/freq.out
+./cc-pVQZ/MP2/freq.out</div></pre>
+<p>As you can see, the results are pretty messy since I wanted to gather the frequencies in groups of similar results. For those unfamiliar with quantum chemistry, I think it should still be pretty clear which go together. For example, I wanted all of the cc-pV.Z directories grouped together, all of the aug-cc-pV.Z ones together, and so on. Piping into <code>sort</code> gets me part of the way there as you can see</p>
+<pre><div class=code>./aug-cc-pV5Z/MP2/freq.out
+./aug-cc-pVDZ/MP2/freq.out
+./aug-cc-pVQZ/MP2/freq.out
+./aug-cc-pVTZ/MP2/freq.out
+./cc-pCV5Z/MP2_fc/freq.out
+./cc-pCV5Z/MP2/freq.out
+./cc-pCVDZ/MP2_fc/freq.out
+./cc-pCVDZ/MP2/freq.out
+./cc-pCVQZ/MP2_fc/freq.out
+./cc-pCVQZ/MP2/freq.out
+./cc-pCVTZ/MP2_fc/freq.out
+./cc-pCVTZ/MP2/freq.out
+./cc-pV5Z/MP2/freq.out
+./cc-pV6Z/MP2/freq.out
+./cc-pVDZ/MP2/freq.out
+./cc-pVQZ/MP2/freq.out
+./cc-pVTZ/MP2/freq.out</div></pre>
+<p>but I still wanted to separate the <code>_fc</code> directories from the other ones, and I wanted them in ascending basis set size, that is TZ, QZ, 5Z, 6Z. I also wanted to delete the DZ results since those weren’t really worth reporting. With the earlier example in mind, we can start with deleting the DZs in a very similar <code>ed</code> command.</p>
+<pre><div class=code>printf &quot;%s\n&quot; &#39;g/DZ/d&#39; &#39;,p&#39; &#39;Q&#39; | ed -s &#39;!find . -iname freq.out | sort&#39;
+./aug-cc-pV5Z/MP2/freq.out
+./aug-cc-pVQZ/MP2/freq.out
+./aug-cc-pVTZ/MP2/freq.out
+./cc-pCV5Z/MP2_fc/freq.out
+./cc-pCV5Z/MP2/freq.out
+./cc-pCVQZ/MP2_fc/freq.out
+./cc-pCVQZ/MP2/freq.out
+./cc-pCVTZ/MP2_fc/freq.out
+./cc-pCVTZ/MP2/freq.out
+./cc-pV5Z/MP2/freq.out
+./cc-pV6Z/MP2/freq.out
+./cc-pVQZ/MP2/freq.out
+./cc-pVTZ/MP2/freq.out</div></pre>
+<p>Since the aug results are in reverse order, I can add a <code>g/aug/m0</code> command to the <code>ed</code> input to move them into the right order at the beginning of the output. I can play a similar trick on the others, along with a direct move on the 6Z to at least get them into chunks. I can do the same thing if I really want careful control over where each chunk is, but this is already pretty handy. The final command and output is</p>
+<pre><div class=code>$ printf &quot;%s\n&quot; &#39;g/DZ/d&#39; &#39;g/aug/m0&#39; &#39;g/pCV/m0&#39; &#39;g/_fc/m$&#39; \
+&#39;g/\/cc-pV.Z\//m0&#39; &#39;g/6Z/m4&#39; &#39;,p&#39; &#39;Q&#39; | ed -s &#39;!find . -iname freq.out \
+| sort&#39;
+./cc-pVTZ/MP2/freq.out
+./cc-pVQZ/MP2/freq.out
+./cc-pV5Z/MP2/freq.out
+./cc-pV6Z/MP2/freq.out
+./cc-pCVTZ/MP2/freq.out
+./cc-pCVQZ/MP2/freq.out
+./cc-pCV5Z/MP2/freq.out
+./aug-cc-pVTZ/MP2/freq.out
+./aug-cc-pVQZ/MP2/freq.out
+./aug-cc-pV5Z/MP2/freq.out
+./cc-pCVTZ/MP2_fc/freq.out
+./cc-pCVQZ/MP2_fc/freq.out
+./cc-pCV5Z/MP2_fc/freq.out</div></pre>
+<p>Hopefully this taught you something about <code>ed</code>! I’ve basically only heard about <code>ed</code> in the “standard text editor” memes, and those are pretty fair since the documentation is pretty lacking in the manual page. The <code>info</code> page is a lot more substantial, so if this piques your interest check it out. Ob<code>vi</code>ously it’s not going to replace <Code>Vim</Code> or Emacs as a main text editor, but it is a nice tool to have in your belt for scripting and especially for formatting Org source block output for use in other blocks.</p>

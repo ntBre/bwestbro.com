@@ -3,5 +3,10 @@
 	"Title": "Bash process substitution and the tee command",
 	"Filename": "blogs/tee.html",
 	"Date": "2020-06-21"
+    },
+    {
+	"Title": "ed is the standard text editor",
+	"Filename": "blogs/ed.html",
+	"Date": "2020-11-28"
     }
 ]

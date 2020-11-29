@@ -21,16 +21,16 @@ body {
 
 /* navbar from w3schools*/
 ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #444;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #444;
 }
 
 li {
-  float: left;
-  border-right: 1px solid #bbb;
+    float: left;
+    border-right: 1px solid #bbb;
 }
 
 li:last-child {
@@ -38,16 +38,16 @@ li:last-child {
 }
 
 li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
 li a:hover {
     text-decoration: none;
-  background-color: #111;
+    background-color: #111;
 }
 /* end navbar */
 
@@ -78,6 +78,7 @@ p {
     padding-left: 40px;
     padding-right: 40px;
     color: #FFFFFF;
+    font-size: 16px;
 }
 
 .entry {
@@ -89,6 +90,11 @@ p {
 }
 
 .sub {
+    color: #FFFFFF;
+}
+
+a {
+    text-decoration: none;
     color: #FFFFFF;
 }
 

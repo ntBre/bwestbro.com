@@ -1,8 +1,8 @@
-// TODO worksheets pages
 package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -17,6 +17,11 @@ var (
 	pubs       Pubs
 	blogs      Blogs
 	worksheets Worksheets
+)
+
+// Flags
+var (
+	host = flag.String("host", "localhost:8000", "specify the port to use")
 )
 
 func Echo(w http.ResponseWriter, req *http.Request) {
@@ -39,8 +44,7 @@ func LoadData(filename string, object interface{}) error {
 
 func indexHandler(w http.ResponseWriter, req *http.Request) {
 	// can move to global to parse only on server startup after testing
-	templates := template.Must(template.
-		ParseGlob("templates/*.html"))
+	templates := template.Must(template.ParseGlob("templates/*.html"))
 	// default handler so check for wrong endpoints
 	path := req.URL.Path[1:]
 	if path != "" && path != "index.html" && path != "index" {
@@ -143,6 +147,7 @@ func worksheetHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	flag.Parse()
 	http.HandleFunc("/img/favicon.png", fileHandler("img/favicon.png"))
 	http.HandleFunc("/css/site.css", fileHandler("css/site.css"))
 	http.HandleFunc("/pub", pubHandler)
@@ -156,7 +161,7 @@ func main() {
 	// different endpoints for different blog posts?
 	// need some part of blog struct to identify, hash maybe on the title
 	http.HandleFunc("/", indexHandler)
-	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+	log.Fatal(http.ListenAndServe(*host, nil))
 }
 
 type Pub struct {
