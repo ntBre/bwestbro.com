@@ -1,12 +1,22 @@
 [
     {
-	"Title": "Bash process substitution and the tee command",
-	"Filename": "blogs/tee.html",
-	"Date": "2020-06-21"
+	"Title": "Understanding interfaces in Go",
+	"Filename": "blogs/interface.html",
+	"Date": "2021-03-12"
+    },
+    {
+	"Title": "Emacs for Go development from scratch",
+	"Filename": "blogs/emacs.html",
+	"Date": "2021-02-01"
     },
     {
 	"Title": "ed is the standard text editor",
 	"Filename": "blogs/ed.html",
 	"Date": "2020-11-28"
+    },
+    {
+	"Title": "Bash process substitution and the tee command",
+	"Filename": "blogs/tee.html",
+	"Date": "2020-06-21"
     }
 ]

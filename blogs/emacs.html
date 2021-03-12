@@ -1,0 +1,548 @@
+<!---
+(zap "" "emacs")
+(setq compile-command "pandoc -f markdown -o emacs.pdf emacs.md")
+(setq compile-command "pandoc -f markdown -o emacs.html emacs.md")
+title: Emacs for Go development from scratch
+subtitle: With evil and company
+--->
+<p>I recently helped one of my labmates set up a basic Emacs configuration for writing Go. While that was fresh in my mind, I figured I might as well write down the steps we took to get it up and running since it can be a little tricky to get all the pieces working. Using a Mac introduced additional complications for him, so things will hopefully go a bit better on Linux. For this tutorial, I spun up a fresh Debian 10 instance on Vultr to emulate a totally new Emacs user.
+</p>
+<h2>Installing Emacs</h2>
+<p>The first command I ran was
+</p>
+<pre><div class=code>
+$ apt update && apt upgrade
+  </div></pre>
+<p>to make sure my already-installed packages were up to date. Then, I ran
+</p>
+  <pre><div class=code>$ apt install emacs golang
+  </div></pre>
+<p>to get the two programs I want to set up. Obviously the installation may differ on your platform. After finishing the installation I went ahead and opened Emacs to start configuring it. If you’ve never used Emacs before, I recommend at least reading over the tutorial and seeing if you like the default keybindings. I’m too used to Vim bindings, though, so the first thing I want is to install evil-mode. Before you can install packages, you need to tell Emacs where the packages are. According to the Emacs Wiki, ELPA is already loaded by default, but many other packages are in MELPA. We can tell Emacs to also find packages in MELPA by adding the commands
+</p>
+
+<pre><div class=code>
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+</div></pre>
+
+<p>to your config file. By default Emacs should create the directory
+  <code>~/.emacs.d</code>, and you can name your
+  file <code>init.el</code> in that directory. To “find” a file in
+  Emacs, which is how to open a file, type
+  <code>Ctrl+x</code> followed by <code>Ctrl+f</code>. In Emacs this
+  kind of binding is typically abbreviated <code>C-x
+  C-f</code>. Similarly, the Meta key is typically abbreviated
+  as <code>M-</code>, which can be confusing since on most keyboards
+  the Alt key will correspond to Meta.
+  <code>S-</code> is sometimes used for Shift as well.</p>
+
+<p>Once you have that loaded into your init file, you can either run
+the individual Lisp commands by going to the rightmost parenthesis of
+each expression and typing
+  <code>C-x C-e</code> to evaluate the expression, or you can reload
+  the whole file by typing
+  <code>M-x load-file</code> and then the path to your init file when
+  prompted. With MELPA added, we now need to refresh the list of
+  packages with
+  <code>M-x package-refresh-contents</code>. On Debian 10, which
+  installed Emacs 26.1 by default, I kept getting an error about
+  failing to load the GNU package archive. According to
+  <a href="https://www.reddit.com/r/emacs/comments/cdei4p/failed_to_download_gnu_archive_bad_request/">this
+  Reddit post</a>, which in turn cites some other sources, you can fix
+  this problem by adding the command
+</p>
+
+<pre><div class=code>
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+  </div></pre>
+
+<p>before you try to refresh packages. If you use a more recent version of Emacs, I think this should not be a problem.
+</p>
+
+<p>In debugging that, I also realized that Emacs created a
+  <code>~/.emacs</code> file separate from my init file where I was
+  writing my configuration. If that happens to you, an easy fix is to
+  open
+  <code>~/.emacs</code> and add a line loading your intended config
+  file such as
+</p>
+
+<pre><div class=code>
+(load "~/.emacs.d/init.el")
+  </div></pre>
+
+<p>as I added to mine.
+</p>
+
+<p>Now that the package list is up to date, there are actually a
+couple of options. You can run
+  <code>M-x package-list-packages</code>, search for evil with
+  <code>C-s evil</code> and then click to install evil, but the more
+  convenient approach is to do
+  <code>M-x package-install RET evil</code>, where RET is the return
+  key used to finish the first part of the command. You will also
+  press Return after typing evil, but that should be more
+  obvious. Once you have
+  <code>evil</code> installed, add the following lines to your init
+  file and it will be enabled by default.
+</p>
+
+<pre><div class=code>
+(require 'evil)
+(evil-mode 1)
+  </div></pre>
+
+<p>Reload your init file and breathe a sigh of relief at having your normal Vim keys for the rest of this process.
+</p>
+
+<h2>use-package</h2>
+
+<p>After getting evil installed, I usually switch to using the package
+  <code>use-package</code> for handling my package installation needs
+  since that effectively keeps a nice list of installed packages for
+  me in my init file and theoretically would let me get set up
+  basically instantly on a new machine. I install
+  <code>use-package</code> just like
+  <code>evil</code>, using the command
+  <code>M-x package-install RET use-package</code>. At this time I
+  also enabled a theme to match my local installation of Emacs. You
+  can do that with the command
+</p>
+
+<pre><div class=code>
+(load-theme 'adwaita)
+  </div></pre>
+
+<p>I’m still a big fan of the
+  <code>tango-dark</code> theme, but I’ve been experimenting with
+  light themes lately. I like the default theme for the most part, but
+  my evil visual selection is totally invisible against it, so I’ve
+  been using
+  <code>adwaita</code>. Anyway, back to
+  <code>use-package</code>. Now that we have that installed, we can
+  start using some more packages. One particularly useful one is
+  <code>helm</code> because it offers fuzzy searching of basically
+  everything in Emacs instead of the built-in tab completion. For some
+  things like finding files I actually much prefer the built-in
+  completion, but for switching buffers I love
+  <code>helm</code> since you don’t have to type
+  <code>*M&lt;tab&gt;</code> to get to the
+  <code>*Messages*</code> buffer, for example. A basic pattern for
+  use-package looks like
+</p>
+
+<pre><div class=code>
+(use-package helm
+  :ensure t
+  :config
+  (helm-mode 1))
+  </div></pre>
+
+<p>where the package name comes after
+  <code>use-package</code>, the
+  <code>:ensure t</code> keyword means ensure the package is
+  installed, and
+  <code>:config</code> starts configuration associated with that
+  package. We’ll use
+  <code>use-package</code> like this to install the rest of the
+  packages we need.
+</p>
+
+<p>Now if you’ve been using
+  <code>evil</code> mode and you’ve had the misfortune of trying to
+  redo something, you’ll get a message like
+  <code>user-error: Customize ‘evil-undo-system’ for redo
+  functionality.</code> in the minibuffer.
+  <code>evil</code> used to require
+  <code>undo-tree</code> on installation, but apparently bleeding-edge
+  versions of Emacs have this kind of functionality built in. That’s
+  great for people on Emacs 28 already, but the rest of us now have to
+  install a separate undo package and then configure it. Since it’s
+  the one I’m familiar with, we’ll just use
+  <code>undo-tree</code>:
+</p>
+
+<pre><div class=code>
+(use-package undo-tree
+  :ensure t
+  :config
+  (evil-set-undo-system 'undo-tree)
+  (global-undo-tree-mode))
+  </div></pre>
+
+<p>With this, undo and redo should be nearly as seamless as in Vim
+itself. We should now be able to move on to writing some Go.
+</p>
+
+<h2>Getting Go to Compile</h2>
+
+<p>I now hit
+  <code>C-x C-f</code> to find a file called
+  <code>hello.go</code> and filled in a minimal hello world example. I
+  immediately noticed that there was no syntax highlighting and that I
+  was in Fundamental mode. To fix that we can add
+</p>
+
+<pre><div class=code>
+(use-package go-mode
+  :ensure t)
+  </div></pre>
+
+<p>to our init file, where I have omitted the
+  <code>:config</code> since I don’t have any additional configuration
+  to add. Now I go back to my hello.go buffer and run
+  <code>M-x go-mode</code> to enable my new Go mode and I now have
+  syntax highlighting.
+</p>
+
+<p>The next thing to test is whether or not I can actually compile
+Go. Of course I could use a Makefile or something and let the shell
+figure out where everything is, but I’d like to use the built-in
+  <code>M-x compile</code> with a compile command of
+  <code>go run .</code> or
+  <code>go test .</code> instead. I thought I remembered that not
+  working out of the box, but surprisingly my Emacs path was already
+  updated with my Go installation. Maybe that was a Mac problem.
+</p>
+
+<p>The base Go mode already has some very handy features such as
+adding imports with
+  <code>C-c C-a</code>, which we can also search incrementally since
+  we have helm installed. It also comes with support for
+  <code>M-x gofmt</code> out of the box. We can make
+  <code>gofmt</code> a little easier to run though by defining a local
+  key binding. I typically bind recompile to F5, so I like having
+  <code>gofmt</code> nearby on F6. However, on my 60% mechanical
+  keyboard, I don’t actually have function keys, so I also bind these
+  to
+  <code>C-c 5</code> and
+  <code>C-c 6</code>, respectively. To make that happen, you can add
+  these expressions to your init file:
+</p>
+
+<pre><div class=code>
+(add-hook 'go-mode-hook
+    (lambda () 
+	(local-set-key (kbd "<f6>") 'gofmt)))
+(add-hook 'go-mode-hook
+    (lambda () 
+	(local-set-key (kbd "C-c 6") 'gofmt)))
+  </div></pre>
+
+<p>You will need to reload Go mode for those to take effect though
+since we defined them as hooks.
+</p>
+<p>The main things we are missing now are auto-completion, which we’ll
+get from
+  <code>gocode</code> and
+  <code>company-mode</code>, better documentation reference, which
+  we’ll get from
+  <code>godoc</code> and
+  <code>go-mode</code> itself, and smarter import handling, which
+  we’ll get by installing
+  <code>goimports</code> and configuring
+  <code>go-mode</code> to run that instead of normal
+  <code>gofmt</code>. We’ll start with the last of these since it’s
+  the easiest and will actually test out many of the settings we need
+  for the others.
+</p>
+
+<h2>goimports</h2>
+
+<p>If you’re new to Go, you may not know how easy it is to install
+packages. Run this command to install goimports:
+</p>
+
+<pre><div class=code>
+$ go get golang.org/x/tools/cmd/goimports
+  </div></pre>
+
+<p>and then the hard part is just getting Emacs to find that in your
+path. Apparently you need to have
+  <code>git</code> installed for
+  <code>go get</code> to work, which is unlikely to be a problem for
+  most people, but I had to
+  <code>apt install git</code> at this point before I could actually
+  run the command above. As it turns out, it’s not actually that hard
+  to get the path to match up either, at least on Linux. Again, I
+  think this took more effort when on a Mac, but all I had to add to
+  my
+  <code>:config</code> section of
+  <code>go-mode</code> was
+</p>
+
+<pre><div class=code>
+(add-to-list 'exec-path "/root/go/bin")
+(setq gofmt-command "goimports")
+  </div></pre>
+
+<p>and I was ready to go, as it were. What we’re adding to path is
+really
+  <code>$GOPATH/bin</code>, which will likely be more useful in your
+  case. Since this is just a temporary machine, I haven’t set up the
+  <code>GOPATH</code> environment variable, and I installed everything
+  as root, so adjust the directory as needed to actually align with
+  where Go installs these executables. Off the top of my head, I think
+  <code>getenv</code> and
+  <code>setenv</code> are the useful functions for setting this up
+  with your environment variables, where you can do something like
+  this to update the path in Emacs with your GOPATH:
+</p>
+
+<pre><div class=code>
+(setenv "PATH" (concat (getenv "PATH") (getenv "GOPATH")))
+  </div></pre>
+
+<p>If you run into errors where things are not on your path as you
+think they should be, it’s probably because Emacs evaluates its path a
+bit differently from your shell, and you need to run something like
+this to update it. However, I did not test these for this post.
+</p>
+
+<h2>godoc and godef</h2>
+
+<p>In the same vein, we can now
+  <code>go get godoc</code> and our path should include that as well,
+  so it should work immediately. As it turns out, it’s not exactly
+  <code>go get godoc</code>. The command for most people will probably
+  be
+</p>
+
+<pre><div class=code>
+$ go get golang.org/x/tools/cmd/godoc
+  </div></pre>
+
+<p>but on Debian stable my Go version was too far out of date, so I
+had to add
+</p>
+
+<pre><div class=code>
+deb http://deb.debian.org/debian buster-backports main
+  </div></pre>
+
+<p>to my
+  <code>/etc/apt/sources.list</code> file, run
+  <code>apt update</code>, and then</p>
+
+<pre><div class=code>
+$ apt -t buster-backports install golang
+  </div></pre>
+
+<p>to get a more recent version of Go that was compatible with that
+version of
+  <code>godoc</code>. You can then use the command
+  <code>M-x godoc-at-point</code> to view the documentation for
+  whatever is under your cursor in another buffer.
+  <code>godoc</code> is also nice for viewing documentation offline in
+  your browser, but that’s not really related to this tutorial. To
+  make it more convenient than typing the command, I bind this to
+  <code>C-c d</code> using another hook to keep the binding local to
+  go-mode.
+</p>
+
+<pre><div class=code>
+(add-hook 'go-mode-hook
+    (lambda () 
+	(local-set-key (kbd "C-c d") 'godoc-at-point)))
+  </div></pre>
+
+<p>That other buffer popping up can also be a bit annoying and is
+often more information than you really need.
+  <code>go-mode</code> comes with a binding already built-in for
+  <code>godef</code> which gives you a brief description of the
+  function in the minibuffer with
+  <code>C-c C-d</code>. To install
+  <code>godef</code> just run
+</p>
+
+<pre><div class=code>
+$ go get github.com/rogpeppe/godef
+  </div></pre>
+
+<p>and that binding should start working right away.
+</p>
+
+<h2>Completion with company-mode</h2>
+
+<p>These niceties are useful, but the big thing we need is
+auto-completion. There are a few frameworks for this in Emacs, but the
+one I’ve always used is
+  <code>company-mode</code>. My understanding of
+  <code>company-mode</code> is that it provides the infrastructure for
+  you to slot in different backends for the languages you want to
+  use. As such, we need to install both
+  <code>company-mode</code> itself, and the Go backend
+  <code>company-go</code>. You can enable
+  <code>company-mode</code> globally if you want, but I actually find
+  it really annoying in text files and especially if you ever use the
+  shell within Emacs, so I just install it and then enable it in the
+  modes I really want it in. This is partly because of the config
+  lines here that set the delay for it to start suggesting things to
+  0.1 seconds and the amount you have to type to 0 characters. This
+  means that it is constantly suggesting things. You can make either
+  of those larger if you want of course, and that will help to make it
+  a bit less overbearing if you find it that way with my settings.
+</p>
+
+<pre><div class=code>
+(use-package company
+  :ensure t
+  :config
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 0))
+
+(use-package company-go
+  :ensure t)
+  </div></pre>
+
+<p>
+  <code>company-go</code> in turn uses
+  <code>gocode</code> as its backend for actually generating
+  completions, so without it the mode is not very useful. In fact,
+  without the
+  <code>gocode</code> executable,
+  <code>company-go</code> is actually worse than plain
+  <code>company-mode</code> since it throws an error instead of just
+  offering very weak completion. To fix this, run
+</p>
+
+<pre><div class=code>
+$ go get github.com/mdempsky/gocode
+  </div></pre>
+
+<p>to obtain
+  <code>gocode</code> and then try typing in your Go-mode buffer. It
+  should be up and running! I originally found the default
+  <code>company-mode</code> set up really nice, but they updated
+  somewhat recently and it became totally unintuitive, so I also add
+  the following configuration to keep it from typing text in as a
+  template and to change the key to cycle through the options to Tab.
+</p>
+
+<pre><div class=code>
+(setq company-go-insert-arguments nil)
+(company-tng-configure-default)
+  </div></pre>
+
+<p>I guess the first of these is actually a company-go update, but
+still I prefer to get rid of them both. It looks like the default
+colors used in
+  <code>company-mode</code> are actually pretty nice on a light theme,
+  but since I changed them to go with
+  <code>tango-dark</code>, I’ll include the code for that in case you
+  want to play with it too:
+</p>
+
+<pre><div class=code>
+(custom-set-faces
+ '(company-preview
+   ((t (:foreground "darkgray" :underline t))))
+ '(company-preview-common
+   ((t (:inherit company-preview))))
+ '(company-tooltip
+   ((t (:background "lightgray" :foreground "black"))))
+ '(company-tooltip-selection
+   ((t (:background "steelblue" :foreground "white"))))
+ '(company-tooltip-common
+   ((((type x)) (:inherit company-tooltip :weight bold))
+    (t (:inherit company-tooltip))))
+ '(company-tooltip-common-selection
+   ((((type x)) (:inherit company-tooltip-selection :weight bold))
+    (t (:inherit company-tooltip-selection)))))
+  </div></pre>
+
+<h2>Conclusion</h2>
+
+<p>Overall that felt like a pretty painless experience, even with some
+minor version issues on Debian. As a warning, I do not think this went
+nearly as smoothly on Mac, but if you are using Linux it should be
+just as smooth if not smoother. Down below I’ll put the full pieces of
+code for very quick copy and pasting of basically the whole process,
+but if you run into any problems please let me know! I have been
+meaning to write something like this for a while, and I actually had
+LaTeX in mind as the language to cover, but Go came up first in a real
+situation. I will probably write a follow-up extending this config to
+writing LaTeX in Emacs as well in the near future.
+</p>
+
+<h2>Snippets</h2>
+
+<pre><div class=code>
+# install default emacs and go versions on a debian-based distro
+$ sudo apt install emacs golang
+
+# install the go packages we need
+$ go get golang.org/x/tools/cmd/goimports \
+         golang.org/x/tools/cmd/godoc     \
+         github.com/rogpeppe/godef        \
+         github.com/mdempsky/gocode
+  </div></pre>
+
+<pre><div class=code>
+;; the whole config file I ended up with
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+
+;; you can also add the following to ensure evil mode is installed
+;; without having to M-x package-install:
+(unless (package-installed-p 'evil)
+  (package-install 'evil))
+
+;; and I assume the same is true for use-package
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+;; now the whole process should be covered by loading this file
+
+(require 'evil)
+(evil-mode 1)
+
+(load-theme 'adwaita)
+
+(use-package helm
+  :ensure t
+  :config
+  (helm-mode 1))
+
+(use-package undo-tree
+  :ensure t
+  :config
+  (evil-set-undo-system 'undo-tree)
+  (global-undo-tree-mode))
+
+(use-package go-mode
+  :ensure t
+  :config
+  (add-to-list 'exec-path "/root/go/bin")
+  (setq gofmt-command "goimports")
+  (add-hook 'go-mode-hook
+    (lambda () 
+	(local-set-key (kbd "C-c d") 'godoc-at-point)))
+  (add-hook 'go-mode-hook
+	    (lambda () 
+	      (local-set-key (kbd "C-c 5") 'recompile)))
+  (add-hook 'go-mode-hook
+	    (lambda () 
+	      (local-set-key (kbd "C-c 6") 'gofmt))))
+
+(use-package company
+  :ensure t
+  :config
+  (company-tng-configure-default)
+  (setq company-go-insert-arguments nil)
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 0))
+
+(use-package company-go
+  :ensure t
+  :config
+  (add-hook 'go-mode-hook (lambda ()
+			    (set (make-local-variable 'company-backends)
+				 '(company-go))
+			    (company-mode))))
+  </div></pre>

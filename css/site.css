@@ -2,6 +2,7 @@ html {
     height: auto;
     min-height:100%;
     margin: 50px;
+    margin-bottom: 100px;
     padding-top: 10px; 
     background-image : linear-gradient(rgb(0,0,255,0.5), white);
     background-repeat: no-repeat;
@@ -11,7 +12,7 @@ html {
 body {
     padding-top: 20px; 
     padding-bottom: 20px; 
-    max-width: 1050px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
     border: 1px solid rgba(255,255, 255, 1);
@@ -22,15 +23,27 @@ body {
 /* navbar from w3schools*/
 ul {
     list-style-type: none;
-    margin: 0;
+    margin: 0 auto;
+    display: table;
     padding: 0;
     overflow: hidden;
     background-color: #444;
+    background-color: #2e3434;
 }
 
-li {
-    float: left;
-    border-right: 1px solid #bbb;
+@media screen and (min-width: 601px) {
+    li {
+	float: left;
+	border-right: 1px solid #bbb;
+	font-size: 2vw;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    li {
+	float: none;
+	font-size: 5vw;
+    }
 }
 
 li:last-child {
@@ -123,3 +136,14 @@ a:active {
     border: 10px;
 }
 
+.org-src-container {
+    font-family: "Lucida Console", Courier, monospace;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: #DFDFDF;
+    margin-left: 50px;
+    margin-right: 50px;
+    border: 10px;
+}

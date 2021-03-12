@@ -64,7 +64,7 @@ func indexHandler(w http.ResponseWriter, req *http.Request) {
 		pubs.Items = pubs.Items[:preview]
 	}
 	if len(blogs.Items) > preview {
-		pubs.Items = pubs.Items[:preview]
+		blogs.Items = blogs.Items[:preview]
 	}
 	templates.ExecuteTemplate(w, "indexPage", &IndexData{Blog: blogs, Pubs: pubs})
 

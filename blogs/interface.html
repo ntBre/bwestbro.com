@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-03-12 Fri 16:17 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Understanding Interfaces in Go</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Brent Westbrook" />
+</head>
+<body>
+<div id="content">
+<p>
+Go's interfaces are useful tools for abstraction, but they can be a
+bit confusing when you are first starting out. I know that was the
+case for me since I have never programmed in an object-oriented
+paradigm that would give me familiarity with class hierarchies and the
+notion of implementing interfaces. Even if I had, my understanding is
+that in other languages you usually tell the compiler that a new class
+implements some interface. Go's approach is somewhat different, in
+that any type can implement a given interface if it has the right
+methods. I'm not knowledgeable enough about the OOP approach to really
+contrast them, but the Go approach is certainly convenient for using
+your own types in preexisting libraries.
+</p>
+
+<p>
+You are confronted with interfaces in Go early on, especially if you
+want to read and write files. File reading and writing functions
+generally take io.Readers and io.Writers, or more specific but related
+types like io.ReadWriters or even io.ReadWriteClosers. My first Go
+projects had to read and parse many files, so I was forced to come up
+to speed with the basics of interfaces pretty quickly, which basically
+means I had to understand that an io.Reader has a Read() method and an
+io.Closer() has a Close() method, and so on.
+</p>
+
+<p>
+Another place you can encounter an interface is in the gonum.org/mat
+package, which offers a Matrix interface and the associated linear
+algebra operations. It was teaching parts of this package to one of my
+labmates that led to this post, which is basically just an example of
+an interface.
+</p>
+
+<p>
+While technically distinct, Go's interfaces are similar to the idea of
+"duck typing." Duck typing uses the expression "if it looks like a
+duck, swims like a duck, and quacks like a duck, then it probably is a
+duck" to determine the type of a given object. The easiest way to see
+this is by way of an example. Let's define a Duck interface
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">type Duck interface {
+	Look()
+	Swim()
+	Quack()
+}
+</pre>
+</div>
+
+<p>
+that includes these actions, 1) "look" like a duck, 2) "swim" like a
+duck, and 3) "quack" like a duck. And we can then define a function
+that requires a Duck argument
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">func Pet(d Duck) { return }
+</pre>
+</div>
+
+<p>
+Duck itself is an abstract type, so to do much with it you need to
+construct a concrete type that implements the Duck interface. To
+implement an interface, a type needs to have the methods defined in
+the interface itself, which is where the connection to the duck
+expression comes in. A Mallard implements the Duck interface:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">type Mallard struct{}
+
+func (m Mallard) Look()  {}
+func (m Mallard) Swim()  {}
+func (m Mallard) Quack() {}
+</pre>
+</div>
+
+<p>
+but a Heron does not
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">type Heron struct{}
+
+func (h Heron) Look() {}
+func (h Heron) Swim() {}
+</pre>
+</div>
+
+<p>
+because it is missing the Quack method. You can see this if you
+actually write up this code and try to pass a Heron to our Pet
+function. The compiler should give a pretty helpful message pointing
+out the problem:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">./main.go:42:5: cannot use h (type Heron) as type Duck in argument to Pet:
+	Heron does not implement Duck (missing Quack method)
+</pre>
+</div>
+
+<p>
+One tricky part is that the method signatures have to be identical to
+the ones defined in the interface. This means that the following
+Pintail type, with its Quack method returning a string, does not
+implement the Duck interface.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">type Pintail struct{}
+
+func (p Pintail) Look()         {}
+func (p Pintail) Swim()         {}
+func (p Pintail) Quack() string { return "quack" }
+</pre>
+</div>
+
+<p>
+Again the compiler tells you pretty much exactly that:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">./main.go:43:5: cannot use p (type Pintail) as type Duck in argument to Pet:
+	Pintail does not implement Duck (wrong type for Quack method)
+		have Quack() string
+		want Quack()
+</pre>
+</div>
+
+<p>
+Another common mistake, especially when working with the
+aforementioned mat package, is to think something implements an
+interface, when really a pointer to the something implements it. For
+example, the following Teal type would not implement the Mallard
+interface, but a pointer to a Teal would. In other words, you can
+write Pet(&amp;Teal{}), but not Pet(Teal{}).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">type Teal struct{}
+
+func (t *Teal) Look()  {}
+func (t *Teal) Swim()  {}
+func (t *Teal) Quack() {}
+</pre>
+</div>
+
+<p>
+Yet again, the compiler is usually quite helpful in these situations,
+indicating that the method actually has a pointer receiver, which
+should be all the hint you need to add an "&amp;" in front of your object,
+but it can still seem mysterious when you first start out.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">./main.go:44:5: cannot use t (type Teal) as type Duck in argument to Pet:
+	Teal does not implement Duck (Look method has pointer receiver)
+</pre>
+</div>
+
+<p>
+A final thing to note is that the concrete types can have other
+methods than those defined by the interface. This allows a single type
+to implement many different interfaces. For example, the Wigeon type
+below implements our Duck interface, while also implementing the
+io.Writer interface, albeit in a useless way. It also includes two
+other methods unrelated to either of those interfaces just for fun.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">type Wigeon struct{}
+
+func (w Wigeon) Look()                             {}
+func (w Wigeon) Swim()                             {}
+func (w Wigeon) Quack()                            {}
+func (w Wigeon) Write(p []byte) (n int, err error) { return 0, nil }
+func (w Wigeon) Eat()                              {}
+func (w Wigeon) Drink()                            {}
+</pre>
+</div>
+
+<p>
+The full code for this post is shown below. Hopefully it helps you
+understand interfaces in Go!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">package main
+
+import "fmt"
+
+type Duck interface {
+	Look()
+	Swim()
+	Quack()
+}
+
+func Pet(d Duck) { return }
+
+type Mallard struct{}
+
+func (m Mallard) Look()  {}
+func (m Mallard) Swim()  {}
+func (m Mallard) Quack() {}
+
+type Heron struct{}
+
+func (h Heron) Look() {}
+func (h Heron) Swim() {}
+
+type Pintail struct{}
+
+func (p Pintail) Look()         {}
+func (p Pintail) Swim()         {}
+func (p Pintail) Quack() string { return "quack" }
+
+type Teal struct{}
+
+func (t *Teal) Look()  {}
+func (t *Teal) Swim()  {}
+func (t *Teal) Quack() {}
+
+type Wigeon struct{}
+
+func (w Wigeon) Look()                             {}
+func (w Wigeon) Swim()                             {}
+func (w Wigeon) Quack()                            {}
+func (w Wigeon) Write(p []byte) (n int, err error) { return 0, nil }
+func (w Wigeon) Eat()                              {}
+func (w Wigeon) Drink()                            {}
+
+func main() {
+	var (
+		m Mallard
+		h Heron
+		p Pintail
+		t Teal
+		w Wigeon
+	)
+	Pet(m)
+	Pet(h)
+	Pet(p)
+	Pet(t)
+	Pet(&amp;t)
+	Pet(w)
+	fmt.Fprintln(w, "Writing to the Wigeon")
+}
+</pre>
+</div>
+</div>
+</body>
+</html>
