@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 )
 
@@ -23,6 +24,45 @@ var (
 var (
 	host = flag.String("host", "localhost:8000", "specify the port to use")
 )
+
+type Pub struct {
+	Authors string
+	Title   string
+	Journal string
+	Status  string
+	Year    int
+	DOI     string
+}
+
+type Pubs struct {
+	Items []*Pub
+}
+
+type Blog struct {
+	Title    string
+	Filename string
+	Date     string
+	Content  string
+}
+
+type Blogs struct {
+	Items []*Blog
+}
+
+type IndexData struct {
+	Blog Blogs
+	Pubs Pubs
+}
+
+type Worksheet struct {
+	Title    string
+	Filename string
+	Type     string
+}
+
+type Worksheets struct {
+	Items []*Worksheet
+}
 
 func Echo(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "%s\n", req.URL.Path)
@@ -146,62 +186,41 @@ func worksheetHandler(w http.ResponseWriter, req *http.Request) {
 	templates.ExecuteTemplate(w, "worksheets", worksheets)
 }
 
+// redirect to my github
+func gitHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "https://github.com/ntBre", http.StatusPermanentRedirect)
+}
+
+// redirect http to https
+func redirectTLS(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "https://"+r.Host+r.RequestURI, http.StatusMovedPermanently)
+}
+
 func main() {
 	flag.Parse()
+
 	http.HandleFunc("/img/favicon.png", fileHandler("img/favicon.png"))
 	http.HandleFunc("/css/site.css", fileHandler("css/site.css"))
 	http.HandleFunc("/pub", pubHandler)
 	http.HandleFunc("/blog", blogHandler)
 	http.HandleFunc("/blogs/", blogsHandler)
 	http.HandleFunc("/misc/", miscHandler)
+	http.HandleFunc("/blogs/figs/", miscHandler)
 	http.HandleFunc("/sp18", worksheetHandler)
 	http.HandleFunc("/fa18", worksheetHandler)
 	http.HandleFunc("/sp19", worksheetHandler)
 	http.HandleFunc("/worksheets/", miscHandler)
-	// different endpoints for different blog posts?
-	// need some part of blog struct to identify, hash maybe on the title
+	http.HandleFunc("/mathjax/", miscHandler)
+	http.HandleFunc("/git", gitHandler)
 	http.HandleFunc("/", indexHandler)
 
-	go http.ListenAndServeTLS(":443", "/etc/letsencrypt/live/bwestbro.com/fullchain.pem",
+	go http.ListenAndServeTLS(":443",
+		"/etc/letsencrypt/live/bwestbro.com/fullchain.pem",
 		"/etc/letsencrypt/live/bwestbro.com/privkey.pem", nil)
-	log.Fatal(http.ListenAndServe(*host, nil))
-}
 
-type Pub struct {
-	Authors string
-	Title   string
-	Journal string
-	Status  string
-	Year    int
-	DOI     string
-}
-
-type Pubs struct {
-	Items []*Pub
-}
-
-type Blog struct {
-	Title    string
-	Filename string
-	Date     string
-	Content  string
-}
-
-type Blogs struct {
-	Items []*Blog
-}
-
-type IndexData struct {
-	Blog Blogs
-	Pubs Pubs
-}
-
-type Worksheet struct {
-	Title    string
-	Filename string
-	Type     string
-}
-
-type Worksheets struct {
-	Items []*Worksheet
+	if strings.Contains(*host, "localhost") {
+		log.Fatal(http.ListenAndServe(*host, nil))
+	} else {
+		log.Fatal(http.ListenAndServe(*host, http.HandlerFunc(redirectTLS)))
+	}
 }
