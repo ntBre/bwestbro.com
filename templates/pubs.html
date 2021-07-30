@@ -1,7 +1,9 @@
 {{define "pubs"}}
+{{if $self := .}}
 {{range $i, $e := .Items}}
+{{if (lt $i $self.Limit)}}
 <p>
-  ({{$i}}) {{.Authors}}. "{{.Title}}." <em>{{.Journal}}</em>,
+  ({{($self.Count $i)}}) {{.Authors}}. "{{.Title}}." <em>{{.Journal}}</em>,
   {{if .Year}}
   {{.Year}}.
   {{else}}
@@ -11,5 +13,7 @@
   DOI: <a class=doi href=https://doi.org/{{.DOI}}>{{.DOI}}</a>.
   {{end}}
 </p>
+{{end}}
+{{end}}
 {{end}}
 {{end}}

@@ -36,6 +36,11 @@ type Pub struct {
 
 type Pubs struct {
 	Items []*Pub
+	Limit int
+}
+
+func (p Pubs) Count(i int) int {
+	return len(p.Items) - i
 }
 
 type Blog struct {
@@ -100,9 +105,7 @@ func indexHandler(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	if len(pubs.Items) > preview {
-		pubs.Items = pubs.Items[:preview]
-	}
+	pubs.Limit = preview
 	if len(blogs.Items) > preview {
 		blogs.Items = blogs.Items[:preview]
 	}
@@ -116,6 +119,7 @@ func pubHandler(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+	pubs.Limit = len(pubs.Items)
 	templates.ExecuteTemplate(w, "pubPage", pubs)
 }
 

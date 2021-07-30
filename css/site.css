@@ -20,7 +20,7 @@ body {
     background-color: #2e3434;
 }
 
-/* navbar from w3schools*/
+/* navbar from w3schools */
 ul {
     list-style-type: none;
     margin: 0 auto;
@@ -31,11 +31,19 @@ ul {
     background-color: #2e3434;
 }
 
-@media screen and (min-width: 601px) {
+@media screen and (min-width: 601px) and (max-width: 1000px){
     li {
 	float: left;
 	border-right: 1px solid #bbb;
 	font-size: 2vw;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    li {
+	float: left;
+	border-right: 1px solid #bbb;
+	font-size: 1.6vw;
     }
 }
 
