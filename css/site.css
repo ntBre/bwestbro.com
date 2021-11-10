@@ -9,7 +9,7 @@ html {
     background-attachment: fixed;
 }
 
-body {
+main {
     padding-top: 20px; 
     padding-bottom: 20px; 
     max-width: 820;
@@ -166,4 +166,13 @@ a:active {
 
 .figure {
     text-align: center;
+}
+
+footer {
+    text-align: center;
+    color: black;
+    margin-top: 50px;
+    max-width: 820;
+    margin-left: auto;
+    margin-right: auto;
 }

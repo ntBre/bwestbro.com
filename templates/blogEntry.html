@@ -2,12 +2,15 @@
 <html>
   {{template "header"}}
   <body>
+    <main>
     <h1>Blogs</h1>
     {{template "navbar"}}
     <h2>{{.Title}}</h2>
     <p>
       {{.Content}}
     </p>
+    </main>
+    {{template "footer"}}
   </body>
 </html>
 {{end}}

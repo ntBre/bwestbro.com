@@ -2,9 +2,12 @@
 <html>
   {{template "header"}}
   <body>
-    <h1>Publications</h1>
-    {{template "navbar"}}
-    {{template "pubs" .}}
+    <main>
+      <h1>Publications</h1>
+      {{template "navbar"}}
+      {{template "pubs" .}}
+    </main>
+  {{template "footer"}}
   </body>
 </html>
 {{end}}
