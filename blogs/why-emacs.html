@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-12-12 Sun 07:49 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Why Emacs?</title>
+<meta name="author" content="Brent Westbrook" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<p>
+After watching a <a href="https://www.youtube.com/watch?v=s0ed8Da3mjE">recent video</a> from DistroTube, I wanted to write down
+some of my thoughts about Emacs. While I don't want discussion of the
+video to dominate this post, it does provide some context for my
+thoughts. The title of the video is "Three HUGE Mistakes New Emacs
+Users Make," and the "HUGE" mistakes, framed as suggestions for
+improvement, are 1) "always have the Emacs daemon running and always
+launch Emacs as emacsclient," 2) "don't navigate in a terminal or file
+manager just to open files in Emacs," and 3) "don't use the terminal
+version of Emacs." I actually agree with the second of these points as
+it basically defeats the point of using Emacs, but I disagree with the
+other two.
+</p>
+
+<p>
+First of all, I find the second point to be almost directly
+contradictory to the first point, especially given the way DT uses
+Emacs in his videos. The only reason to always keep an Emacs daemon
+running and to launch Emacs using <code>emacsclient</code> is if you are
+constantly opening and closing Emacs instances since the client/server
+setup helps to shorten the startup time of opening a new instance. If
+you are constantly opening and closing Emacs instances, how are you
+doing that? Probably from your terminal or file manager after locating
+the file you want to edit through one of them. In the video, he
+demonstrates that he has keybindings set to quickly open Emacs, which
+somewhat counters my point about opening his clients from the terminal
+as he says not to do. However, for many new users (myself included),
+especially those coming from Vim, emacsclient is a crutch to continue
+using Emacs like they used to use Vim: navigate around in the terminal
+until you get to a file you want to edit, type <code>emacs &lt;file&gt;</code> to work
+on it, and then close Emacs when you finish. In my view, this
+completely nullifies any benefit of using Emacs and leads to the
+"Emacs is an OS lacking a good editor" meme. As DT uses it, or at
+least shows in his videos, to give him the benefit of the doubt, Emacs
+looks like a weird and bloated replacement for tools like Vim, a
+terminal emulator, a file manager, or even an image viewer.
+</p>
+
+<p>
+The beauty of Emacs to me is its extensibility and the integration you
+can achieve between different parts. My go-to example of the
+integration aspect is my workflow for receiving an email with a task I
+want to complete or an event I need to schedule. Since I read my email
+in Emacs using <a href="https://www.djcbsoftware.nl/code/mu/mu4e.html">mu4e</a> and because I have a keybinding to open it, when I
+see an email notification in my status bar, I hit <code>C-c m</code> to open
+mu4e, <code>b u</code> to open the unread mail and then <code>RET</code> to select the new
+message. All of this is in muscle memory at this point so it happens
+basically instantaneously. If it's unimportant, I just mash <code>q</code> until
+I quit the mu4e windows and am dropped back into the same window
+configuration I started with. If it is important, I can do things like
+run <code>org-store-link</code> to save a link to the email, which I can then
+either integrate into my TODO list, which is always open in another
+Emacs buffer, or I can use an <a href="https://orgmode.org/manual/Capture-templates.html">Org capture template</a> to quickly add an
+event to my <a href="https://orgmode.org/manual/Agenda-Views.html">Org agenda</a> and also add a link back to the email there as
+well. This is particularly handy for things like Zoom calls since I
+can just link back to the original email in my agenda instead of
+trying to extract the actual Zoom link. This may not sound too
+impressive if you're used to something like Google calendar, but now
+instead of relying on Google for my calendar, I can keep my agenda in
+a plaintext format and sync it with my other files in a git repo. As
+plaintext, I can also process it however I want, which allows me to
+use things like <a href="https://github.com/spegoraro/org-alert">org-alert</a> that I recently started helping to maintain
+to check on upcoming events and notify me when they are close to
+starting.
+</p>
+
+<p>
+When I was using Vim and the terminal for these tasks, I had <a href="https://neomutt.org/">NeoMutt</a>
+as an email client, <a href="https://calcurse.org/">calcurse</a> for my calendar, and Vim for editing TODO
+files. This means that my workflow was more like open a terminal for
+email, open a terminal for the calendar, copy something from the email
+into the calendar and probably also into Vim in a third
+terminal. While I still had keybindings for opening my email and
+calendar, the lack of integration between them was a huge hassle. Some
+people reading this could probably point me to some documentation for
+improving that integration, but the point is that using many tools
+within Emacs sets up that kind of tight interaction without having to
+modify three different configuration files, not counting the bindings
+you have to create within your window manager.
+</p>
+
+<p>
+To circle back to something that really bothered me about Emacs
+initially, the fact that files you visit stay open as buffers in the
+background actually turns out to be very handy. I know Vim has the
+same functionality, but I never used it when I primarily used Vim and
+when I've tried it seems much clunkier. As a result, the way I would
+typically handle multiple files in Vim was constantly to open and
+close Vim and move between files and directories using the
+terminal. In Emacs, every file I open just stays open when I go on to
+do something else, so when I need to revisit a file even days later I
+can just use the buffer switching commands to call it back up. This is
+far more convenient than reopening Emacs and freshly finding a file
+every time you want to access it. I think the Emacs server does keep
+the buffers open between Emacs client sessions, but I still don't
+understand the reason for closing the Emacs frame instead of just
+keeping it open on a different workspace (or tag in my case on
+<a href="https://dwm.suckless.org/">dwm</a>). DT addresses this indirectly in the video by saying he likes to
+have separate Emacs frames managed by his tiling window manager, but
+the way Emacs manages windows is also tiling and after a little
+tweaking it has some very sensible defaults. As such, I much prefer
+opening horizontal and vertical splits to view multiple files in Emacs
+instead of spawning multiple instances of Emacs managed by my window
+manager. Again, this is the way most people use Vim in multiple
+terminals rather than how I think people typically use Emacs.
+</p>
+
+<p>
+On the extensibility front, what finally made me ridiculously excited
+about Emacs was realizing that you can evaluate Emacs Lisp expressions
+anywhere. This is the real reason why you shouldn't stop and start
+Emacs constantly: Emacs is a living, breathing Emacs Lisp
+interpreter. You can continuously tune your environment exactly to
+your needs and desires. You can write and run snippets of Emacs Lisp
+in the comments of a program in a different language, and then you can
+save the useful ones into your config file for later use. I also never
+really understood the "self-documenting" aspect that is often touted
+as a benefit of Emacs until I actually started reading documentation
+frequently. Most library authors generate fantastic documentation
+within the docstrings of their code, which becomes accessible to you
+with a quick press of <code>C-h v</code> on a variable name or <code>C-h f</code> on a
+function. Once you combine these two observations, writing Lisp
+everywhere and getting documentation for it literally at the press of
+a button, you can truly take advantage of living in Emacs.
+</p>
+
+<p>
+Some of this benefit has been captured by <a href="https://neovim.io/">Neovim</a>, which uses Lua to
+provide a much better extension language than Vimscript. I'm not
+really familiar enough with Neovim to really contrast it with Emacs,
+but I did want to acknowledge its existence and the fact that it also
+strives to improve extensibility by embedding a serious programming
+language in its configuration system. Such a configuration system is
+contrasted by that of VSCode, another editor that is probably more
+popular than any of these others (probably combined) that I am also
+not very familiar with. However, my limited experience, and the
+results of a quick Google, indicates that VSCode pretty strictly
+limits you to a set list of configuration options. This list is pretty
+extensive, but you can't do things like define new functions or even
+string multiple existing functions together into one action like you
+can in Emacs Lisp or presumably in Lua.
+</p>
+
+<p>
+All of this is not to say you should do everything in Emacs. As an
+example, I do know about <a href="https://www.gnu.org/software/tramp/">TRAMP</a> and occasionally use it for editing
+remote files, but most of the time when I'm logging into a
+supercomputer or other server over SSH, I stick to the terminal and
+Vim. However, this brings me to the third point in the video about not
+using Emacs in the terminal. As several commenters point out, there is
+no reason not to use Emacs in the terminal, over SSH for example, if
+you want to take advantage of some of the real features of
+Emacs. These "real" features are contrasted by the features mentioned
+in the video like different font sizes in a single buffer and in-line
+image display that only the GUI version can afford. I think this point
+is indicative of the way DT uses Emacs, which is much different from
+how I use it. DT seems to use Emacs primarily for org-mode (where
+those cool fonts and images come into play) and maybe for magit as
+well. These are very compelling reasons to use Emacs, but since most
+of his work is creating and editing videos, which can't be done within
+Emacs (barring <a href="https://github.com/ch11ng/exwm">EXWM</a>), he doesn't need or really can't take advantage
+of most of the power of Emacs. As a bit of a digression, I actually
+have a similar critique of his demonstration of using <code>eww</code> to browse
+the web in Emacs, which of course you also can't do in the terminal. I
+think almost nobody does that and the only reason I actually do use
+that functionality is for reading the <a href="http://www.lispworks.com/documentation/HyperSpec/Front/">Common Lisp HyperSpec</a>, which
+leads into my next point.
+</p>
+
+<p>
+If instead of video creation and editing your primary work is
+programming, gathering and analyzing data, and writing papers like
+mine is, Emacs is a very powerful tool. With that in mind, you may
+sometimes want to open Emacs, even a vanilla version of Emacs, over
+SSH within the terminal. When I do that, I want to use some of the
+aforementioned features like writing Elisp alongside whatever
+scripting language I'm writing. Or I might want to use the better
+default automatic indentation for Perl, AWK, and Bash scripts that I
+see in Emacs compared to Vim. Or I might want to split my screen and
+open a shell in one side so I can instantly test changes to my script
+without having to open another terminal or constantly open and close
+Vim within the same terminal window. Or I may want to use <code>M-x
+compile</code> to run and rerun the script even more rapidly. Saying never
+to do something is rarely a good idea, and like the point about using
+emacsclient, saying never to run Emacs in the terminal seems to reveal
+the superficial nature of DT's Emacs usage.
+</p>
+
+<p>
+To cut DT some slack, in the past he has cleverly (or maybe
+sarcastically) pointed out how Emacs can actually fit into the Unix
+philosophy since its one job is being an Emacs Lisp interpreter, and
+it does that job better than any other program I've seen. However, his
+own use of Emacs is not particularly reflective of that. I think this
+is in large part due to the type of work he does, which doesn't seem
+to lend itself to being highly optimized within Emacs. Anyway, the
+point of this post really wasn't to bash DT, I just wanted to analyze
+why his video was so uncompelling even for a serious Emacs user and
+also write down some of my own thoughts about why Emacs is cool. In
+summary, Emacs is cool primarily because of its extensibility. The
+tight integration it can provide between seemingly disparate parts of
+your workflow stems from this extensibility and the power of Emacs
+Lisp, which allows you to write virtually anything you can imagine to
+run in Emacs. It is also cool because it has a GUI and can render
+different font sizes and in-line images in text files, but these are
+the icing on the cake rather than substantive reasons to live inside
+Emacs.
+</p>
+</div>
+</body>
+</html>
