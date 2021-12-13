@@ -1,5 +1,10 @@
 [
     {
+	"Title": "Emacs for LaTeX",
+	"Filename": "blogs/latex.html",
+	"Date": "2021-12-12"
+    },
+    {
 	"Title": "Why Emacs?",
 	"Filename": "blogs/why-emacs.html",
 	"Date": "2021-12-12"

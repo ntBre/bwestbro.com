@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-12-12 Sun 21:12 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs for LaTeX</title>
+<meta name="generator" content="Org Mode" />
+</head>
+<body>
+<div id="content" class="content">
+<p>
+If you're here to copy and paste the config <a href="#org79ab8f7">use this link</a> file
+otherwise enjoy reading!
+</p>
+
+<div id="outline-container-org7288a37" class="outline-2">
+<h2 id="org7288a37"><span class="section-number-2"></span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Welcome back to another iteration of the Emacs from Scratch
+series. This time I'm going to be setting up Emacs for writing
+documents in LaTeX, which I think is one of the best uses for
+Emacs, especially for beginners. Today I'll be setting this up on
+a fresh Debian 11 instance on Vultr, but hopefully the same steps
+will work on other mainstream distributions like Ubuntu and Arch.
+</p>
+
+<p>
+As in the last installment, the first command I'll run is
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">sudo apt update &amp;&amp; apt upgrade
+</pre>
+</div>
+
+<p>
+to make sure my installed packages are up to date and to refresh
+the package repositories for installing Emacs. After that, I will
+actually install Emacs with the command
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">sudo apt install emacs
+</pre>
+</div>
+
+<p>
+That should finish pretty quickly, and in my case it looks like
+it installed Emacs 27.1, which is a pretty recent version. Now
+I'll start the long installation of LaTeX. There are several
+packages available that provide LaTeX with varying levels of
+accompanying packages. I think <code>texlive-base</code> is the bare
+essentials, <code>texlive</code> offers "a decent selection" of packages,
+and <code>texlive-full</code> comes with basically everything you can
+imagine and requires about 5-6 Gb to fully install. Since I use
+LaTeX for science and math, I'll give <code>texlive-science</code> a try. I
+think on Arch I install <code>texlive-most</code>, which, as the name
+indicates, comes with most of the packages, but excludes most of
+the language packages that make up most of the size of
+<code>texlive-full</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">apt install texlive-science
+</pre>
+</div>
+
+<p>
+Finally, I'll install my favorite PDF viewer, <a href="https://pwmt.org/projects/zathura/">zathura</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">apt install zathura
+</pre>
+</div>
+
+<p>
+Of course, all of these could be combined into a single command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">apt install emacs zathura texlive-science
+</pre>
+</div>
+
+<p>
+At this point, <a href="https://www.youtube.com/watch?v=xBctAt2TVew">my YouTube video</a> begins, so you can also watch that
+to follow along.
+</p>
+
+<p>
+As a quick aside, Emacs users typically abbreviate the Control
+key as C- and the Meta or Alt key as M- in a key chord. So when I
+say type "M-x" that means hold down your Alt key and press the x
+key at the same time. Space in key chords mean they are separate
+commands. For example <code>C-x C-f</code>, the chord for <code>find-file</code>, is
+produced by holding Control, pressing x, releasing x, and
+pressing f. Of course you can release Control at the same time
+you release x, but since you're about to press <code>C-f</code> you probably
+won't.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc994c7f" class="outline-2">
+<h2 id="orgc994c7f"><span class="section-number-2"></span> Basic Emacs Configuration</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Just like last time, the first bit to add to the fresh Emacs
+config initializes the package repositories so we can actually
+install stuff.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
+</pre>
+</div>
+
+<p>
+After evaluating this code (probably by placing your cursor after
+each closing parenthesis and typing <code>C-x C-e</code> or by running <code>M-x
+  eval-buffer</code>), you should run <code>M-x package-refresh-contents</code> to
+ensure your package repositories are up to date. This should head
+off any issues with installing packages. One other thing I
+remembered in making the video is that some of the later package
+operations will write out Custom variables to your config file. If
+you want to hide that, just add the following snippet:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setq custom-file "~/.custom.el")
+(load custom-file)
+</pre>
+</div>
+
+<p>
+For the sake of this post, I just use the <code>.emacs</code> file in my home
+directory, but if you are using a more normal path inside
+<code>~/.emacs.d</code>, just update the path to be in there, or really
+anywhere you prefer.
+</p>
+
+<p>
+With that out of the way, we'll use <code>use-package</code> to install the
+rest of our packages since that's the easiest technique I've
+found. This snippet will set that up:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+</pre>
+</div>
+
+<p>
+Assuming you're a Vim user, the next thing to set up is
+<code>evil-mode</code>, the major Vim emulation package for Emacs. Now that
+we have <code>use-package</code>, we can do that with
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package evil
+  :ensure t
+  :config
+  (evil-mode))
+</pre>
+</div>
+
+<p>
+One "issue" with <code>evil-mode</code> now is that it doesn't come with an
+undo/redo facility by default. Really this is an issue with
+Emacs, which is supposed to be fixed, I think in Emacs 28. I call
+it an "issue" with <code>evil-mode</code> because evil used to come with
+<code>undo-tree</code>, but several months ago it dropped that as a
+dependency, instead opting to let (make) you choose your
+own. We'll just install <code>undo-tree</code>, which is actually pretty
+nice on its own as well. We'll also enable it globally.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package undo-tree
+  :ensure t
+  :config
+  (global-undo-tree-mode 1))
+</pre>
+</div>
+
+<p>
+Now that we have <code>undo-tree</code>, we need to make some tweaks to our
+evil config. The main thing here is telling evil to use
+<code>undo-tree</code> as the undo system, but I also added
+<code>evil-search-module</code> since the new default is to use the built-in
+Emacs search functionality instead of Vim-style searches. If
+you're not a Vim user, you may want to try the default as well.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package evil
+  :ensure t
+  :config
+  (evil-set-undo-system 'undo-tree)
+  (setq evil-search-module 'evil-search)
+  (evil-mode))
+</pre>
+</div>
+
+<p>
+One other piece of basic setup I like to do is installing <code>ivy</code>,
+which offers nicer completion menus than the Emacs defaults. This
+part is totally optional but may smooth your experience with
+switching buffers and completing LaTeX commands later on.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org64ed995" class="outline-2">
+<h2 id="org64ed995"><span class="section-number-2"></span> AUCTeX</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+With that basic functionality established, all we really have left
+is to install <a href="https://www.gnu.org/software/auctex/">AUCTeX</a>, which helps to smoothly integrate Emacs and
+LaTeX. As usual, the basic configuration is just to ensure the
+package is installed with <code>use-package</code>.  However, we also need to
+make sure to <code>defer</code> the package to avoid an error about <code>auctex</code>
+not providing the <code>auctex</code> feature, which I ran into in the video. I
+think this is because <code>auctex</code> doesn't provide its own package, it
+just adds features to the built-in TeX package or something like
+that. Regardless, <code>:defer t</code> will prevent that.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package auctex
+  :ensure t
+  :defer t)
+</pre>
+</div>
+
+<p>
+Assuming you want to view the PDFs produced by LaTeX in an external
+program, you'll also need to set the <code>TeX-view-program-selection</code>
+variable to your external PDF viewer. Since we installed <code>zathura</code>
+and since it automatically refreshes when you recompile your
+document, update your configuration as shown below.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package auctex
+  :ensure t
+  :defer t
+  :hook (LaTeX-mode . (lambda ()
+			(push (list 'output-pdf "Zathura")
+			      TeX-view-program-selection))))
+</pre>
+</div>
+
+<p>
+I don't really think this should need to be a <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Hooks.html">hook</a>, but this is the
+best way I've found to ensure you don't run into a weird error
+message on startup. If you try setting the variable directly, you
+will likely receive an error about it being an unbound variable
+before you load AUCTeX the first time.
+</p>
+
+<p>
+Now that we have <code>auctex</code> installed and set up, let me show you
+around a bit. To do that, you'll need a minimal example of a LaTeX
+file such as the one shown below:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-latex">\documentclass{article}
+
+\begin{document}
+
+Hello world
+
+\end{document}
+</pre>
+</div>
+
+<p>
+The first thing to do is press <code>C-c C-c</code>, which will let you select
+a LaTeX command to run. The default should fittingly be
+<code>LaTeX</code>. Pressing <code>RET</code> will compile the document. After that,
+pressing <code>C-c C-c</code> again should default to <code>View</code> since the document
+is already up to date. Since we have set up Zathura as our PDF
+viewer, pressing <code>RET</code> on <code>View</code> should prompt you for a Zathura
+command. Pressing <code>RET</code> again should open Zathura.
+</p>
+
+<p>
+One of the most useful features of AUCTeX, beyond the ease of
+compilation and viewing, is its insertion of various LaTeX
+environments through the <code>C-c C-e</code> binding. This part is probably
+easier to see in the video or just by trying it yourself, but
+inserting a <code>table</code>, for example, will walk you through the parts of
+a table environment, including the caption, the label, and the
+alignment of the columns. This is very helpful especially if you are
+new to LaTeX. You can similarly insert environments like figures,
+itemized lists, enumerated lists, equations, and so on. That
+basically exhausts what I typically use inside of AUCTeX, but if you
+press <code>C-h b</code> to list the bindings available and search for
+<code>latex-mode</code>, there are actually many more useful bindings. I
+already see some that I will try to integrate into my workflow in
+the future.
+</p>
+
+<p>
+One last feature that is pretty nice, and will become apparent as
+soon as you start typing a real document, is the in-line
+preview. Assuming you're running a graphical Emacs instance, AUCTeX
+will preview font features like sub- and superscripts, italics, and
+boldface. I don't find this that helpful personally, but some people
+who have seen me editing LaTeX files have been very impressed, so I
+hope people reading this will be too.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge8c7366" class="outline-2">
+<h2 id="orge8c7366"><span class="section-number-2"></span> Snippets</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+If the existing AUCTeX commands don't do enough for you, another
+nice thing to include when editing LaTeX is a way to insert
+snippets. These allow you to type a small prefix, which expands into
+a full piece of code when you press Tab. The package I use for
+snippets in Emacs is called <a href="https://github.com/joaotavora/yasnippet">yasnippet</a>. Install it using the code
+below.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+</pre>
+</div>
+
+<p>
+Once you have this installed, you can add a new LaTeX snippet from a
+TeX buffer with the command <code>M-x yas-new-snippet</code>. This will open a
+new buffer that looks like
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text"># -*- mode: snippet -*-
+# name:
+# key:
+# --
+</pre>
+</div>
+
+<p>
+You can put whatever you want in the <code>name</code> spot, but the <code>key</code> is
+what you will type to trigger the snippet. I usually make them both
+the same thing. Since I write about fundamental vibrational
+frequencies often and these are typically referred to with the Greek
+letter "nu", I have a snippet like the one below set up:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text"># -*- mode: snippet -*-
+# name: nu
+# key: nu
+# --
+\$\nu_{$1}\$$0
+</pre>
+</div>
+
+<p>
+After I type <code>nu</code> in a LaTeX file, I can now hit Tab and this text
+is inserted, then my cursor is placed in the <code>$1</code> location. There I
+can type the appropriate subscript. Then when I hit Tab again, my
+cursor moves to the <code>$0</code> location and the snippet is finished. One
+problem I ran into on the video, though, is that saving the snippet
+did not work as usual. Normally I can just press <code>C-c C-c</code> to finish
+editing the snippet. If you run into the same problem, this
+keybinding is supposed to be bound to
+<code>yas-load-snippet-buffer-and-close</code>, so you can at least call this
+directly. I got out of it by saving the snippet buffer, but that's
+not as easy as it should be.
+</p>
+
+<p>
+If it's not clear, <code>yasnippet</code> is useful in other modes as well. For
+example, when working on a very repetitive programming project, I
+wrote a Golang snippet for inserting the template of a for
+loop. I've also written some for org-mode that I can't think of
+right now. But the point is that snippets are very handy anywhere
+there is a lot of repetitive text to be inserted, potentially with
+components that need to be modified each time.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6c613ff" class="outline-2">
+<h2 id="org6c613ff"><span class="section-number-2"></span> Viewing PDFs in Emacs</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+If you aren't satisfied with opening your PDFs in an external
+viewer, you can also use Emacs to view the PDFs directly. As I
+showed (with some difficulty) in the video, you can use the built-in
+<code>doc-view-mode</code> to view PDFs by finding them with <code>C-x
+C-f</code>, but this is pretty plain. Another issue
+with <code>doc-view-mode</code> is that it doesn't update
+automatically upon recompiling LaTeX, but you can add a hook to fix
+that:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(add-hook 'doc-view-mode-hook 'auto-revert-mode)
+</pre>
+</div>
+
+<p>
+The issue I ran into in the video was actually that I didn't have
+<code>ghostscript</code> installed, so make sure to run
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">sudo apt install ghostscript
+</pre>
+</div>
+
+<p>
+if you do want to use <code>doc-view-mode</code>. With <code>ghostscript</code> installed,
+I think it should be triggered automatically for files with a .pdf
+extension.
+</p>
+
+<p>
+Another option is to use the <a href="https://github.com/politza/pdf-tools">pdf-tools</a> package. I've had some
+trouble with this package in the past, but that was several years
+ago. Just in the past week I have heard that one of my friends is
+using it to great effect, so I expect it is much improved. It looks
+like they have good documentation for installing it, so I will defer
+to them for now, but I may make another post or video about setting
+it up if I give it a try myself or if enough people request it.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org79ab8f7" class="outline-2">
+<h2 id="org79ab8f7"><span class="section-number-2"></span> Full Config</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Here is the full configuration file I put together in the video and
+modified slightly while writing the post itself. As always, let me
+know if you have any suggestions or run into problems!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
+
+(setq custom-file "~/.custom.el")
+(load custom-file)
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode)
+  (evil-set-undo-system 'undo-tree))
+
+(use-package undo-tree
+  :ensure t
+  :config
+  (global-undo-tree-mode 1))
+
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1))
+
+(use-package auctex
+  :ensure t
+  :defer t
+  :hook (LaTeX-mode .
+		    (lambda ()
+		      (push (list 'output-pdf "Zathura")
+			    TeX-view-program-selection))))
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

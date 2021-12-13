@@ -176,3 +176,7 @@ footer {
     margin-left: auto;
     margin-right: auto;
 }
+
+pre {
+    font-size: 14px;
+}
