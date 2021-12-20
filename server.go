@@ -32,6 +32,7 @@ type Pub struct {
 	Status  string
 	Year    int
 	DOI     string
+	Cover   string
 }
 
 type Pubs struct {
@@ -204,6 +205,7 @@ func main() {
 	flag.Parse()
 
 	http.HandleFunc("/img/favicon.png", fileHandler("img/favicon.png"))
+	http.HandleFunc("/img/", miscHandler)
 	http.HandleFunc("/css/site.css", fileHandler("css/site.css"))
 	http.HandleFunc("/pub", pubHandler)
 	http.HandleFunc("/blog", blogHandler)

@@ -12,6 +12,11 @@
   {{if .DOI}}
   DOI: <a class=doi href=https://doi.org/{{.DOI}}>{{.DOI}}</a>.
   {{end}}
+  {{if .Cover}}
+  Cover Art:
+
+  <img class="cover" src="{{.Cover}}" alt="{{.Title}} cover">
+  {{end}}
 </p>
 {{end}}
 {{end}}

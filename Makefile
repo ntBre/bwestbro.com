@@ -14,3 +14,8 @@ files:
 
 deploy: build
 	rsync -avz $(DIRS) $(TARGET) $(DEST)
+
+# this should be a suffix rule, for converting large cover images to
+# reasonable sized ones
+# cover:
+# 	convert infile -resize 518400@ outfile

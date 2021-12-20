@@ -3,6 +3,18 @@ theme based on emacs tango-dark
 (find-file "/usr/local/share/emacs/29.0.50/etc/themes/tango-dark-theme.el")
 */
 
+:root {
+    --yellow: #fce94f;
+    --orange: #fcaf3e;
+    --brown: #e9b96e;
+    --green: #73d216;
+    --blue: #729fcf;
+    --purple: #e090d7;
+    --red: #ef2929;
+    --alum: #eeeeec;
+    --gray: #2e3436;
+}
+
 html {
     height: auto;
     min-height:100%;
@@ -22,7 +34,7 @@ main {
     margin-right: auto;
     border: 1px solid rgba(255,255, 255, 1);
     box-shadow: 0px 0px 13px 6px rgba(0, 0, 0, 0.75);
-    background-color: #2e3436;
+    background-color: var(--gray);
 }
 
 /* navbar from w3schools */
@@ -33,7 +45,7 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #444;
-    background-color: #2e3436;
+    background-color: var(--gray);
 }
 
 @media screen and (min-width: 601px) and (max-width: 1000px){
@@ -80,12 +92,12 @@ li a:hover {
 h1 {
     padding-top: 10px;
     text-align: center;
-    color: #73d216;
+    color: var(--green);
 }
 
 h2 {
     text-align: center;
-    color: #73d216;
+    color: var(--green);
 }
 
 h3 {
@@ -97,7 +109,7 @@ h4 {
 }
 
 #welcome {
-    color: #fce94f;
+    color: var(--yellow);
 }
 
 p {
@@ -108,7 +120,7 @@ p {
 }
 
 .entry {
-    color: #e090d7;
+    color: var(--purple);
 }
 
 .doi {
@@ -119,6 +131,14 @@ p {
     color: #FFFFFF;
 }
 
+img.cover {
+    display: block;
+    margin-left: auto;
+    margin-top: 20px;
+    margin-right: auto;
+    width: 25%;
+}
+
 a {
     text-decoration: none;
     color: #FFFFFF;
@@ -126,7 +146,7 @@ a {
 
 p a {
     text-decoration: none;
-    color: #fce94f;
+    color: var(--yellow);
 }
 
 a:link {
@@ -148,7 +168,7 @@ a:active {
     padding-bottom: 20px;
     padding-left: 50px;
     padding-right: 50px;
-    background-color: #DFDFDF;
+    background-color: var(--alum);
     margin-left: 50px;
     margin-right: 50px;
     border: 10px;
@@ -160,7 +180,7 @@ a:active {
     padding-bottom: 20px;
     padding-left: 50px;
     padding-right: 50px;
-    background-color: #DFDFDF;
+    background-color: var(--alum);
     margin-left: 50px;
     margin-right: 50px;
     border: 10px;
@@ -189,4 +209,16 @@ footer {
 
 pre {
     font-size: 14px;
+}
+
+.me {
+    text-decoration: underline;
+}
+
+.undergrad {
+    color: var(--purple);
+}
+
+.highschool {
+    color: var(--red);
 }
