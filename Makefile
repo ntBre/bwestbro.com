@@ -1,4 +1,4 @@
-DIRS = blogs css img json misc templates worksheets mathjax
+DIRS = blogs css img json misc templates worksheets #mathjax
 DEST = root@bwestbro:site/
 TARGET = server
 SRC = server.go

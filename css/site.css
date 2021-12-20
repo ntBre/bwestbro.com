@@ -1,23 +1,28 @@
+/*
+theme based on emacs tango-dark
+(find-file "/usr/local/share/emacs/29.0.50/etc/themes/tango-dark-theme.el")
+*/
+
 html {
     height: auto;
     min-height:100%;
     margin: 50px;
     margin-bottom: 100px;
-    padding-top: 10px; 
+    padding-top: 10px;
     background-image : linear-gradient(rgb(0,0,255,0.5), white);
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
 main {
-    padding-top: 20px; 
-    padding-bottom: 20px; 
+    padding-top: 20px;
+    padding-bottom: 20px;
     max-width: 820;
     margin-left: auto;
     margin-right: auto;
     border: 1px solid rgba(255,255, 255, 1);
     box-shadow: 0px 0px 13px 6px rgba(0, 0, 0, 0.75);
-    background-color: #2e3434;
+    background-color: #2e3436;
 }
 
 /* navbar from w3schools */
@@ -28,7 +33,7 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #444;
-    background-color: #2e3434;
+    background-color: #2e3436;
 }
 
 @media screen and (min-width: 601px) and (max-width: 1000px){
@@ -75,12 +80,12 @@ li a:hover {
 h1 {
     padding-top: 10px;
     text-align: center;
-    color: #6ac214;
+    color: #73d216;
 }
 
 h2 {
     text-align: center;
-    color: #6ac214;
+    color: #73d216;
 }
 
 h3 {
@@ -92,7 +97,7 @@ h4 {
 }
 
 #welcome {
-    color: #edd400;
+    color: #fce94f;
 }
 
 p {
@@ -117,6 +122,11 @@ p {
 a {
     text-decoration: none;
     color: #FFFFFF;
+}
+
+p a {
+    text-decoration: none;
+    color: #fce94f;
 }
 
 a:link {
