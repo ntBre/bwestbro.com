@@ -207,6 +207,15 @@ footer {
     margin-right: auto;
 }
 
+footer a {
+    text-align: center;
+    color: black;
+    margin-top: 50px;
+    max-width: 820;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 pre {
     font-size: 14px;
 }

@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 	"text/template"
+	"time"
 )
 
 var (
@@ -74,8 +75,8 @@ func Echo(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "%s\n", req.URL.Path)
 }
 
-// Load json data from filename into an object.
-// The object must be a pointer.
+// Load json data from filename into an object. The object must be a
+// pointer.
 func LoadData(filename string, object interface{}) error {
 	data, err := ioutil.ReadFile(filepath.Join("json", filename))
 	if err != nil {
@@ -191,6 +192,33 @@ func worksheetHandler(w http.ResponseWriter, req *http.Request) {
 	templates.ExecuteTemplate(w, "worksheets", worksheets)
 }
 
+type RSS struct {
+	Title   string
+	Link    string
+	PubDate string
+}
+
+func rssHandler(w http.ResponseWriter, req *http.Request) {
+	rss := make([]*RSS, 0)
+	templates := template.Must(template.ParseGlob("templates/*.html"))
+	err := LoadData("blogs.json", &blogs.Items)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	for _, blog := range blogs.Items {
+		t, err := time.Parse("2006-01-02", blog.Date)
+		if err != nil {
+			panic(err)
+		}
+		rss = append(rss, &RSS{
+			Title:   blog.Title,
+			Link:    blog.Filename,
+			PubDate: t.Format("Mon, 02 Jan 2006 15:04:05 -0700"),
+		})
+	}
+	templates.ExecuteTemplate(w, "rss", struct{ Items []*RSS }{rss})
+}
+
 // redirect to my github
 func gitHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "https://github.com/ntBre", http.StatusPermanentRedirect)
@@ -218,6 +246,7 @@ func main() {
 	http.HandleFunc("/worksheets/", miscHandler)
 	http.HandleFunc("/mathjax/", miscHandler)
 	http.HandleFunc("/git", gitHandler)
+	http.HandleFunc("/rss", rssHandler)
 	http.HandleFunc("/", indexHandler)
 
 	go http.ListenAndServeTLS(":443",
