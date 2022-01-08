@@ -3,8 +3,12 @@ DEST = root@bwestbro:site/
 TARGET = server
 SRC = server.go
 
+ifeq ($(DEBUG), 1)
+FLAGS = -debug
+endif
+
 run:
-	go run $(SRC)
+	go run $(SRC) $(FLAGS)
 
 build: server.go
 	go build -o $(TARGET) -tags netgo .

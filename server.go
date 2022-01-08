@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -14,16 +15,14 @@ import (
 	"time"
 )
 
-var (
-	preview    int = 3
-	pubs       Pubs
-	blogs      Blogs
-	worksheets Worksheets
+const (
+	preview int = 3
 )
 
 // Flags
 var (
-	host = flag.String("host", "localhost:8000", "specify the port to use")
+	host  = flag.String("host", "localhost:8000", "specify the port to use")
+	debug = flag.Bool("debug", false, "enable debugging information")
 )
 
 type Pub struct {
@@ -34,8 +33,13 @@ type Pub struct {
 	Year    int
 	DOI     string
 	Cover   string
+	Date    string
 }
 
+// Pubs is a type for holding a collection of Pub types. The Limit
+// field is necessary because I don't just want to truncate the slice
+// of Pubs in the preview on the index page. Instead, I want to have
+// the full count available to display next to the pubs
 type Pubs struct {
 	Items []*Pub
 	Limit int
@@ -99,6 +103,10 @@ func indexHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	// need locks or cache or something on these unless I load in init
+	var (
+		pubs  Pubs
+		blogs Blogs
+	)
 	err := LoadData("pubs.json", &pubs.Items)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -117,6 +125,7 @@ func indexHandler(w http.ResponseWriter, req *http.Request) {
 
 func pubHandler(w http.ResponseWriter, req *http.Request) {
 	templates := template.Must(template.ParseGlob("templates/*.html"))
+	var pubs Pubs
 	err := LoadData("pubs.json", &pubs.Items)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -127,6 +136,7 @@ func pubHandler(w http.ResponseWriter, req *http.Request) {
 
 func blogHandler(w http.ResponseWriter, req *http.Request) {
 	templates := template.Must(template.ParseGlob("templates/*.html"))
+	var blogs Blogs
 	err := LoadData("blogs.json", &blogs.Items)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -139,6 +149,7 @@ func blogsHandler(w http.ResponseWriter, req *http.Request) {
 	var (
 		show  Blog
 		found bool
+		blogs Blogs
 	)
 	templates := template.Must(template.ParseGlob("templates/*.html"))
 	err := LoadData("blogs.json", &blogs.Items)
@@ -185,6 +196,7 @@ func fileHandler(filename string) func(http.ResponseWriter, *http.Request) {
 func worksheetHandler(w http.ResponseWriter, req *http.Request) {
 	filename := req.URL.Path[1:]
 	templates := template.Must(template.ParseGlob("templates/*.html"))
+	var worksheets Worksheets
 	err := LoadData(filename+".json", &worksheets.Items)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -201,6 +213,10 @@ type RSS struct {
 func rssHandler(w http.ResponseWriter, req *http.Request) {
 	rss := make([]*RSS, 0)
 	templates := template.Must(template.ParseGlob("templates/*.html"))
+	var (
+		blogs Blogs
+		pubs  Pubs
+	)
 	err := LoadData("blogs.json", &blogs.Items)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -208,7 +224,7 @@ func rssHandler(w http.ResponseWriter, req *http.Request) {
 	for _, blog := range blogs.Items {
 		t, err := time.Parse("2006-01-02", blog.Date)
 		if err != nil {
-			panic(err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 		rss = append(rss, &RSS{
 			Title:   blog.Title,
@@ -216,7 +232,28 @@ func rssHandler(w http.ResponseWriter, req *http.Request) {
 			PubDate: t.Format("Mon, 02 Jan 2006 15:04:05 -0700"),
 		})
 	}
-	templates.ExecuteTemplate(w, "rss", struct{ Items []*RSS }{rss})
+	err = LoadData("pubs.json", &pubs.Items)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	for _, pub := range pubs.Items {
+		t, err := time.Parse("2006-01-02", pub.Date)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		rss = append(rss, &RSS{
+			Title:   pub.Title,
+			Link:    fmt.Sprintf("https://doi.org/%s", pub.DOI),
+			PubDate: t.Format("Mon, 02 Jan 2006 15:04:05 -0700"),
+		})
+	}
+	var nw io.Writer
+	if *debug {
+		nw = io.MultiWriter(w, os.Stdout)
+	} else {
+		nw = w
+	}
+	templates.ExecuteTemplate(nw, "rss", struct{ Items []*RSS }{rss})
 }
 
 // redirect to my github
