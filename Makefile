@@ -1,5 +1,5 @@
 DIRS = blogs css img json misc templates worksheets #mathjax
-DEST = root@bwestbro:site/
+DEST = root@bwestbro.com:site/
 TARGET = server
 SRC = server.go
 
