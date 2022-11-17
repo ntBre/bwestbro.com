@@ -1,118 +1,140 @@
 [
-    {
-	"Authors": "<span class=\"me\">B. R. Westbrook</span>, <span class=\"highschool\">G. M. Beasley</span>, and R. C. Fortenberry",
-	"Title": "Polycyclic Aliphatic Hydrocarbons: Is Tetrahedrane Present in UIR Spectra?",
-	"Journal": "PCCP",
-	"Year": 2022,
-	"DOI": "10.1039/D2CP01103D",
-	"Date": "2022-05-25"
-    },
-    {
-	"Authors": "K. N. Poland, <span class=\"me\">B. R. Westbrook</span>, D. H. Magers, R. C. Fortenberry, and S. R. Davis",
-	"Title": "Benzvalyne: Real or Imaginary?",
-	"Journal": "J. Chem. Phys.",
-	"Year": 2022,
-	"DOI": "10.1063/5.0077033",
-	"Date": "2022-01-10"
-    },
-    {
-	"Authors": "<span class=\"me\">B. R. Westbrook</span> and R. C. Fortenberry",
-	"Title": "Anharmonic Vibrational Frequencies of Water Borane and Associated Molecules",
-	"Journal": "Molecules",
-	"Year": 2021,
-	"DOI": "10.3390/molecules26237348",
-	"Date": "2021-12-03"
-    },
-    {
-	"Authors": "<span class=\"undergrad\">A. G. Watrous</span>, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
-	"Title": "F12-TZ-cCR: A Methodology for Faster and Still Highly-Accurate Quartic Force Fields",
-	"Journal": "J. Phys. Chem. A",
-	"Year": 2021,
-	"DOI": "10.1021/acs.jpca.1c08355",
-	"Cover": "/img/f12ccr_cover.jpg",
-	"Date": "2021-11-30"
-    },
-    {
-	"Authors": "<span class=\"me\">B. R. Westbrook</span>, <span class=\"undergrad\">D. J. Patel</span>, <span class=\"undergrad\">J. D. Dallas</span>, <span class=\"highschool\">G. C. Swartzfager</span>, T. J. Lee, and R. C. Fortenberry",
-	"Title": "Fundamental Vibrational Frequencies and Spectroscopic Constants of Substituted Cyclopropenylidene (c-C<sub>3</sub>HX, X=F,Cl,CN)",
-	"Journal": "J. Phys. Chem. A",
-	"Year": 2021,
-	"DOI": "10.1021/acs.jpca.1c06576",
-	"Cover": "/img/c3hcn_cover.jpg",
-	"Date": "2021-10-05"
-    },
-    {
-	"Authors": "<span class=\"undergrad\">A. G. Watrous</span>, <span class=\"me\">B. R. Westbrook</span>, M. C. Davis, and R. C. Fortenberry",
-	"Title": "Vibrational and Rotational Spectral Data for Possible Interstellar Detection of AlH<sub>3</sub>OH<sub>2</sub>, SiH<sub>3</sub>OH, and SiH<sub>3</sub>NH<sub>2</sub>",
-	"Journal": "Mon. Not. Royal Astron. Soc.",
-	"Year": 2021,
-	"DOI": "10.1093/mnras/stab2683",
-	"Date": "2021-09-22"
-    },
-    {
-	"Authors": "<span class=\"undergrad\">M. B. Gardner</span>, <span class=\"me\">B. R. Westbrook</span>, R. C. Fortenberry, and T. J. Lee",
-	"Title": "Highly-Accurate Quartic Force Fields for the Prediction of Anharmonic Rotational Constants and Fundamental Vibrational Frequencies",
-	"Journal": "Spectrochim. Acta A",
-	"Year": 2021,
-	"DOI": "10.1016/j.saa.2020.119184",
-	"Date": "2021-03-05"
-    },
-    {
-	"Authors": "<span class=\"me\">B. R. Westbrook</span>, <span class=\"undergrad\">E. M. Valencia</span>, <span class=\"undergrad\">S. C. Rushing</span>, G. S. Tschumper, and R. C. Fortenberry",
-	"Title": "Anharmonic Vibrational Frequencies of Ammonia Borane (BH<sub>3</sub>NH<sub>3</sub>)",
-	"Journal": "J. Chem. Phys.",
-	"Status": "accepted",
-	"Year": 2021,
-	"DOI": "10.1063/5.0040050",
-	"Date": "2021-01-29"
-    },
-    {
-	"Authors": "<span class=\"undergrad\">J. D. Dallas</span>, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
-	"Title": "Anharmonic Vibrational Frequencies and Spectroscopic Constants for the Detection of Ethynol in Space",
-	"Journal": "Front. Astron. Space Sci. - Astrochemistry",
-	"Year": 2021,
-	"DOI": "10.3389/fspas.2020.626407",
-	"Date": "2021-01-15"
-    },
-    {
-	"Authors": "<span class=\"undergrad\">M. B. Gardner</span>, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
-	"Title": "Spectral Characterization for Small Clusters of Silicon and Oxygen: SiO<sub>2</sub>, SiO<sub>3</sub>, Si<sub>2</sub>O<sub>3</sub>, Si<sub>2</sub>O<sub>4</sub>",
-	"Journal": "Planet. Space Sci.",
-	"Year": 2020,
-	"DOI": "10.1016/j.pss.2020.105076",
-	"Date": "2020-11-15"
-    },
-    {
-	"Authors": "<span class=\"me\">B. R. Westbrook</span>, W. A. Del Rio, T. J. Lee, and R. C. Fortenberry",
-	"Title": "Overcoming the Out-of-Plane Bending Issue in an Aromatic Hydrocarbon: The Anharmonic Vibrational Frequencies of c-(CH)C<sub>3</sub>H<sub>2</sub><sup>+</sup>",
-	"Journal": "PCCP",
-	"Year": 2020,
-	"DOI": "10.1039/D0CP01889A",
-	"Date": "2020-05-26"
-    },
-    {
-	"Authors":"<span class=\"me\">B. R. Westbrook</span> and R. C. Fortenberry",
-	"Title": "Anharmonic Frequencies of (MO)<sub>2</sub> &amp; Related Hydrides for M = Mg, Al, Si, P, S, Ca, &amp; Ti and Heuristics for Predicting Anharmonic Corrections of Inorganic Oxides",
-	"Journal": "J. Phys. Chem. A",
-	"Year": 2020,
-	"DOI": "10.1021/acs.jpca.0c01609",
-	"Cover": "/img/m2o2_cover.jpg",
-	"Date": "2020-03-26"
-    },
-    {
-	"Authors": "R. C. Fortenberry, Tarek Trabelsi, <span class=\"me\">B. R. Westbrook</span>, W. A. Del Rio, and J. S. Francisco",
-	"Title": "Communication: Molecular Oxygen Generation from the Reaction of Water Cations with Oxygen Atoms",
-	"Journal": "J. Chem. Phys.",
-	"Year": 2019,
-	"DOI": "10.1063/1.5102073",
-	"Date": "2019-05-31"
-    },
-    {
-	"Authors": "<span class=\"me\">B. R. Westbrook</span>, K. D. Dreux, G. S. Tschumper, J. S. Francisco, and R. C. Fortenberry",
-	"Title": "Binding of the Atomic Cations Hydrogen through Argon to Water and Hydrogen Sulfide",
-	"Journal": "PCCP",
-	"Year": 2018,
-	"DOI": "10.1039/C8CP05378B",
-	"Date": "2018-10-02"
-    }
+  {
+    "Authors": "<span class=\"undergrad\">C. M. Sehring</span>, C. Z. Palmer, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
+    "Title": "The Spectral Features and Detectability of Small, Cyclic Silicon Carbide Clusters",
+    "Journal": "Front. Astron. Space Sci. - Astrochemistry",
+    "Status": "accepted",
+    "Date": "2022-11-17"
+  },
+  {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span>, J. P. Layfield, T. J. Lee, and R. C. Fortenberry",
+    "Title": "Reparameterized Semi-Empirical Methods for Computing Anharmonic Vibrational Frequencies of Multiply-Bonded Hydrocarbons",
+    "Journal": "Electronic Structure",
+    "Status": "accepted",
+    "Date": "2022-11-14"
+  },
+  {
+    "Authors": "<span class=\"undergrad\">A. G. Watrous</span>, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
+    "Title": "Theoretical Spectra and Energetics for c-C<sub>3</sub>HC<sub>2</sub>H, l-C<sub>5</sub>H<sub>2</sub>, and Bipyramidal D<sub>3h</sub> C<sub>5</sub>H<sub>2</sub>",
+    "Journal": "Front. Astron. Space Sci. - Astrochemistry",
+    "Year": 2022,
+    "DOI": "10.3389/fspas.2022.1051535",
+    "Date": "2022-11-14"
+  },
+  {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span>, <span class=\"highschool\">G. M. Beasley</span>, and R. C. Fortenberry",
+    "Title": "Polycyclic Aliphatic Hydrocarbons: Is Tetrahedrane Present in UIR Spectra?",
+    "Journal": "PCCP",
+    "Year": 2022,
+    "DOI": "10.1039/D2CP01103D",
+    "Date": "2022-05-25"
+  },
+  {
+    "Authors": "K. N. Poland, <span class=\"me\">B. R. Westbrook</span>, D. H. Magers, R. C. Fortenberry, and S. R. Davis",
+    "Title": "Benzvalyne: Real or Imaginary?",
+    "Journal": "J. Chem. Phys.",
+    "Year": 2022,
+    "DOI": "10.1063/5.0077033",
+    "Date": "2022-01-10"
+  },
+  {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span> and R. C. Fortenberry",
+    "Title": "Anharmonic Vibrational Frequencies of Water Borane and Associated Molecules",
+    "Journal": "Molecules",
+    "Year": 2021,
+    "DOI": "10.3390/molecules26237348",
+    "Date": "2021-12-03"
+  },
+  {
+    "Authors": "<span class=\"undergrad\">A. G. Watrous</span>, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
+    "Title": "F12-TZ-cCR: A Methodology for Faster and Still Highly-Accurate Quartic Force Fields",
+    "Journal": "J. Phys. Chem. A",
+    "Year": 2021,
+    "DOI": "10.1021/acs.jpca.1c08355",
+    "Cover": "/img/f12ccr_cover.jpg",
+    "Date": "2021-11-30"
+  },
+  {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span>, <span class=\"undergrad\">D. J. Patel</span>, <span class=\"undergrad\">J. D. Dallas</span>, <span class=\"highschool\">G. C. Swartzfager</span>, T. J. Lee, and R. C. Fortenberry",
+    "Title": "Fundamental Vibrational Frequencies and Spectroscopic Constants of Substituted Cyclopropenylidene (c-C<sub>3</sub>HX, X=F,Cl,CN)",
+    "Journal": "J. Phys. Chem. A",
+    "Year": 2021,
+    "DOI": "10.1021/acs.jpca.1c06576",
+    "Cover": "/img/c3hcn_cover.jpg",
+    "Date": "2021-10-05"
+  },
+  {
+    "Authors": "<span class=\"undergrad\">A. G. Watrous</span>, <span class=\"me\">B. R. Westbrook</span>, M. C. Davis, and R. C. Fortenberry",
+    "Title": "Vibrational and Rotational Spectral Data for Possible Interstellar Detection of AlH<sub>3</sub>OH<sub>2</sub>, SiH<sub>3</sub>OH, and SiH<sub>3</sub>NH<sub>2</sub>",
+    "Journal": "Mon. Not. Royal Astron. Soc.",
+    "Year": 2021,
+    "DOI": "10.1093/mnras/stab2683",
+    "Date": "2021-09-22"
+  },
+  {
+    "Authors": "<span class=\"undergrad\">M. B. Gardner</span>, <span class=\"me\">B. R. Westbrook</span>, R. C. Fortenberry, and T. J. Lee",
+    "Title": "Highly-Accurate Quartic Force Fields for the Prediction of Anharmonic Rotational Constants and Fundamental Vibrational Frequencies",
+    "Journal": "Spectrochim. Acta A",
+    "Year": 2021,
+    "DOI": "10.1016/j.saa.2020.119184",
+    "Date": "2021-03-05"
+  },
+  {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span>, <span class=\"undergrad\">E. M. Valencia</span>, <span class=\"undergrad\">S. C. Rushing</span>, G. S. Tschumper, and R. C. Fortenberry",
+    "Title": "Anharmonic Vibrational Frequencies of Ammonia Borane (BH<sub>3</sub>NH<sub>3</sub>)",
+    "Journal": "J. Chem. Phys.",
+    "Status": "accepted",
+    "Year": 2021,
+    "DOI": "10.1063/5.0040050",
+    "Date": "2021-01-29"
+  },
+  {
+    "Authors": "<span class=\"undergrad\">J. D. Dallas</span>, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
+    "Title": "Anharmonic Vibrational Frequencies and Spectroscopic Constants for the Detection of Ethynol in Space",
+    "Journal": "Front. Astron. Space Sci. - Astrochemistry",
+    "Year": 2021,
+    "DOI": "10.3389/fspas.2020.626407",
+    "Date": "2021-01-15"
+  },
+  {
+    "Authors": "<span class=\"undergrad\">M. B. Gardner</span>, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
+    "Title": "Spectral Characterization for Small Clusters of Silicon and Oxygen: SiO<sub>2</sub>, SiO<sub>3</sub>, Si<sub>2</sub>O<sub>3</sub>, Si<sub>2</sub>O<sub>4</sub>",
+    "Journal": "Planet. Space Sci.",
+    "Year": 2020,
+    "DOI": "10.1016/j.pss.2020.105076",
+    "Date": "2020-11-15"
+  },
+  {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span>, W. A. Del Rio, T. J. Lee, and R. C. Fortenberry",
+    "Title": "Overcoming the Out-of-Plane Bending Issue in an Aromatic Hydrocarbon: The Anharmonic Vibrational Frequencies of c-(CH)C<sub>3</sub>H<sub>2</sub><sup>+</sup>",
+    "Journal": "PCCP",
+    "Year": 2020,
+    "DOI": "10.1039/D0CP01889A",
+    "Date": "2020-05-26"
+  },
+  {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span> and R. C. Fortenberry",
+    "Title": "Anharmonic Frequencies of (MO)<sub>2</sub> &amp; Related Hydrides for M = Mg, Al, Si, P, S, Ca, &amp; Ti and Heuristics for Predicting Anharmonic Corrections of Inorganic Oxides",
+    "Journal": "J. Phys. Chem. A",
+    "Year": 2020,
+    "DOI": "10.1021/acs.jpca.0c01609",
+    "Cover": "/img/m2o2_cover.jpg",
+    "Date": "2020-03-26"
+  },
+  {
+    "Authors": "R. C. Fortenberry, Tarek Trabelsi, <span class=\"me\">B. R. Westbrook</span>, W. A. Del Rio, and J. S. Francisco",
+    "Title": "Communication: Molecular Oxygen Generation from the Reaction of Water Cations with Oxygen Atoms",
+    "Journal": "J. Chem. Phys.",
+    "Year": 2019,
+    "DOI": "10.1063/1.5102073",
+    "Date": "2019-05-31"
+  },
+  {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span>, K. D. Dreux, G. S. Tschumper, J. S. Francisco, and R. C. Fortenberry",
+    "Title": "Binding of the Atomic Cations Hydrogen through Argon to Water and Hydrogen Sulfide",
+    "Journal": "PCCP",
+    "Year": 2018,
+    "DOI": "10.1039/C8CP05378B",
+    "Date": "2018-10-02"
+  }
 ]
