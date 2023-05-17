@@ -1,9 +1,18 @@
 [
   {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span> and R. C. Fortenberry",
+    "Title": "pbqff: Push-Button Quartic Force Fields",
+    "Journal": "J. Chem. Theory Comput.",
+    "Year": 2023,
+    "DOI": "10.1021/acs.jctc.3c00129",
+    "Cover": "/img/pbqff_cover.jpg",
+    "Date": "2023-04-07"
+  },
+  {
     "Authors": "A. R. Flint, <span class=\"undergrad\">A. G. Watrous</span>, <span class=\"me\">B. R. Westbrook</span>, <span class=\"undergrad\">D. J. Patel</span>, and R. C. Fortenberry",
     "Title": "Gas-Phase Formation and Spectroscopic Characterization of the Disubstituted Cyclopropenylidenes c-C<sub>3</sub>(C<sub>2</sub>H)<sub>2</sub>, c-C<sub>3</sub>(CN)<sub>2</sub>, and c-C<sub>3</sub>(C<sub>2</sub>H)(CN)",
     "Journal": "Astron. Astrophys.",
-    "Status": "in press",
+    "Year": 2023,
     "DOI": "10.1051/0004-6361/202245643",
     "Date": "2023-01-17"
   },
