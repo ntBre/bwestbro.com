@@ -1,5 +1,12 @@
 [
   {
+    "Authors": "<span class=\"undergrad\">A. G. Watrous</span>, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
+    "Title": "The Performance of Hybrid and F12*/F12c Explicitly Correlated Coupled Cluster Methods for Use in Anharmonic Vibrational Frequency Computations",
+    "Journal": "Int. J. Quantum Chem.",
+    "Status": "accepted",
+    "Date": "2023-08-26"
+  },
+  {
     "Authors": "<span class=\"me\">B. R. Westbrook</span> and R. C. Fortenberry",
     "Title": "pbqff: Push-Button Quartic Force Fields",
     "Journal": "J. Chem. Theory Comput.",
