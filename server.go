@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -30,10 +29,10 @@ type Pub struct {
 	Title   string
 	Journal string
 	Status  string
-	Year    int
 	DOI     string
 	Cover   string
 	Date    string
+	Year    int
 }
 
 // Pubs is a type for holding a collection of Pub types. The Limit
@@ -82,7 +81,7 @@ func Echo(w http.ResponseWriter, req *http.Request) {
 // Load json data from filename into an object. The object must be a
 // pointer.
 func LoadData(filename string, object interface{}) error {
-	data, err := ioutil.ReadFile(filepath.Join("json", filename))
+	data, err := os.ReadFile(filepath.Join("json", filename))
 	if err != nil {
 		return err
 	}
@@ -123,7 +122,7 @@ func indexHandler(w http.ResponseWriter, req *http.Request) {
 
 }
 
-func pubHandler(w http.ResponseWriter, req *http.Request) {
+func pubHandler(w http.ResponseWriter, _ *http.Request) {
 	templates := template.Must(template.ParseGlob("templates/*.html"))
 	var pubs Pubs
 	err := LoadData("pubs.json", &pubs.Items)
@@ -134,7 +133,7 @@ func pubHandler(w http.ResponseWriter, req *http.Request) {
 	templates.ExecuteTemplate(w, "pubPage", pubs)
 }
 
-func blogHandler(w http.ResponseWriter, req *http.Request) {
+func blogHandler(w http.ResponseWriter, _ *http.Request) {
 	templates := template.Must(template.ParseGlob("templates/*.html"))
 	var blogs Blogs
 	err := LoadData("blogs.json", &blogs.Items)
@@ -168,7 +167,7 @@ func blogsHandler(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, "Page not found", http.StatusNotFound)
 		return
 	}
-	content, err := ioutil.ReadFile(show.Filename)
+	content, err := os.ReadFile(show.Filename)
 	if err != nil {
 		http.Error(w, "Page not found", http.StatusNotFound)
 		return
@@ -184,7 +183,7 @@ func miscHandler(w http.ResponseWriter, r *http.Request) {
 
 func fileHandler(filename string) func(http.ResponseWriter, *http.Request) {
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
-		return func(w http.ResponseWriter, r *http.Request) {
+		return func(w http.ResponseWriter, _ *http.Request) {
 			http.Error(w, err.Error(), http.StatusNotFound)
 		}
 	}
@@ -210,7 +209,7 @@ type RSS struct {
 	PubDate string
 }
 
-func rssHandler(w http.ResponseWriter, req *http.Request) {
+func rssHandler(w http.ResponseWriter, _ *http.Request) {
 	rss := make([]*RSS, 0)
 	templates := template.Must(template.ParseGlob("templates/*.html"))
 	var (
