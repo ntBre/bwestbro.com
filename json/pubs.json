@@ -1,6 +1,14 @@
 [
   {
     "Authors": "<span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
+    "Title": "High throughput anharmonic vibrational and rotational spectral computations",
+    "Journal": "Ann. Rep. Comput. Chem.",
+    "Year": 2023,
+    "DOI": "10.1016/bs.arcc.2023.10.005",
+    "Date": "2023-11-10"
+  },
+  {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
     "Title": "Taming Semi-Empirical Methods for PAHs and Vibrational Spectra",
     "Journal": "J. Molec. Spectrosc.",
     "Year": 2023,
