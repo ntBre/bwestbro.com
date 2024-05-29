@@ -1,5 +1,21 @@
 [
   {
+    "Authors": "<span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
+    "Title": "Anharmonic rotational and vibrational spectroscopic constants of NH<sub>2</sub>CH<sub>2</sub>OH",
+    "Journal": "Vib. Spec.",
+    "Year": 2024,
+    "DOI": "10.1016/j.vibspec.2024.103690",
+    "Date": "2024-05-28"
+  },
+  {
+    "Authors": "A. R. Flint, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
+    "Title": "Theoretical Rotational and Vibrational Spectra Data for the Hypermagnesium Oxide Species Mg<sub>2</sub>O and Mg<sub>2</sub>O<sup>+</sup>",
+    "Journal": "ChemPhysChem",
+    "Year": 2024,
+    "DOI": "10.1002/cphc.202400479",
+    "Date": "2024-05-27"
+  },
+  {
     "Authors": "<span class=\"undergrad\">A. G. Watrous</span>, <span class=\"me\">B. R. Westbrook</span>, and R. C. Fortenberry",
     "Title": "On the detectability of interstellar diaminomethane ((NH<sub>2</sub>)<sub>2</sub>CH<sub>2</sub>) ",
     "Journal": "Mon. Not. Royal Astron. Soc.",
