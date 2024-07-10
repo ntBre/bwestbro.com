@@ -1,0 +1,318 @@
+<h1 id="introduction">Introduction</h1>
+<p>If you’ve been following the blog for a while, you’ll know that I
+don’t post very frequently. At the time of writing this (9 July 2024),
+my last post was on 12 December 2021. One of the biggest reasons for
+this is that I haven’t come up with a good pipeline for writing and
+publishing posts. Each of my blog posts is simply an HTML file in the
+<code>blogs</code> subdirectory of my website <a
+href="https://github.com/ntBre/bwestbro.com">repo</a>. Originally I
+would just write them in HTML directly, but because I spend so much time
+in Emacs, I started experimenting with writing my posts in Org Mode.
+This is quite nice for the actual writing part of the process because
+I’m very familiar with Org, and I can use all of my normal editing
+snippets for inserting code blocks and equations and stuff like that.
+However, I don’t really like the process of exporting from Org to HTML
+for publication on my site. At first glance,
+<code>org-export-dispatch</code> looks really nice, and it has a handy
+default binding of <code>C-c C-e</code>. On the other hand, this
+interactive approach makes it more difficult to perform this export as
+part of a script or Makefile<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a>. One other quibble I
+have with Org export is that it includes a lot of junk in the generated
+HTML. Here’s a snippet from the top of one of my Org-exported posts:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>     <span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;utf-8&quot;<span class="kw">?&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE </span>html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;<span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> xmlns</span><span class="op">=</span><span class="st">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en&quot;</span><span class="ot"> xml:lang</span><span class="op">=</span><span class="st">&quot;en&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 2021-12-12 Sun 21:12 --&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> http-equiv</span><span class="op">=</span><span class="st">&quot;Content-Type&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;text/html;charset=utf-8&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;viewport&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;width=device-width, initial-scale=1&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Emacs for LaTeX<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;generator&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;Org Mode&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;content&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;content&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>If you&#39;re here to copy and paste the full config</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>file, <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#org79ab8f7&quot;</span><span class="dt">&gt;</span>use this link<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>. Otherwise enjoy</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>reading!</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Again, I’m sure there is a way to configure this, and I vaguely
+remember trying that in the past, but it’s just annoying to me.</p>
+<p>The approach most people seem to take is to use a tool like <a
+href="https://pandoc.org">pandoc</a> to convert from Markdown to HTML,
+so that is what I’m trying with this post. Despite resisting Markdown
+for a while in favor of Org Mode (including <code>README.org</code>
+files on GitHub), I already use <code>markdown-mode</code> in Emacs for
+editing most of my READMEs, so I’m fairly familiar with the key bindings
+and useful functions. I have also used <code>pandoc</code> a bit in the
+past and expect it to be more amenable to scripting as part of my
+website repo.</p>
+<p>One other minor issue I’ve run into in the past before we get to some
+<code>pandoc</code> code is that I don’t really know where to keep draft
+blog posts. I have my website repo set to public in case it’s useful for
+others to see how to write a small web server in Go, but I don’t
+necessarily want to keep draft blog posts in public. In the past, I’ve
+kept these drafts in another private repo to keep them backed up and
+then export them into the main site repo when they are ready to publish.
+However, that introduces a couple of layers of friction from my
+perspective. Namely, when I go three years without publishing a blog
+post, it’s easy to forget where I kept old drafts if they aren’t
+alongside the published versions. Secondarily, it slightly complicates
+the export process that I want to streamline. Thus, I’ve decided to keep
+a git-ignored <code>drafts</code> directory in my website repo, at least
+for now.</p>
+<p>A final minor “issue” is that I also have my YouTube channel to
+consider. Many of the topics I want to blog about also make for good
+video topics, which has led me to procrastinate both writing and video
+production. On that front, I’ve decided that if I feel like writing, I
+should just write<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>, not delay the writing for a
+hypothetical video. If anyone reads my blog at all, the audience is
+likely much smaller than my YouTube audience and also likely disjoint,
+so I don’t think I’m really going to bore anyone with duplicate content.
+Further, putting my thoughts down in writing first should lead to better
+videos if I get around to them eventually.</p>
+<h1 id="exporting-with-pandoc">Exporting with pandoc</h1>
+<p>Now that I’ve motivated the code in this post, let me lay out the
+(relevant) structure of my repo:</p>
+<pre class="text"><code>├── Makefile
+├── blogs
+├── css
+├── drafts
+│   └── blog-update.md
+├── go.mod
+├── img
+├── json
+│   ├── blogs.json
+├── misc
+├── server.go
+├── server_test.go
+├── templates
+└── worksheets</code></pre>
+<p>I’ve omitted most of the subdirectories and files within these
+directories for clarity. You can see this very blog post in Markdown
+form in my <code>drafts</code> directory under the name
+<code>blog-update.md</code>. My server populates the list of blog posts
+based on the contents of the <code>json/blogs.json</code> file. Because
+it reads the filename from the JSON entries, I don’t necessarily
+<em>have</em> to put the output HTML into the <code>blogs</code>
+directory, but that’s where I want them to go. In Go, the
+<code>Blog</code> struct is this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Blog <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    Title    <span class="dt">string</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    Filename <span class="dt">string</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    Date     <span class="dt">string</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    Content  <span class="dt">string</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>but I only include <code>Title</code>, <code>Filename</code>, and
+<code>Date</code> in the JSON data, loading <code>Content</code> at
+runtime only when the page is requested. Anyway, the two main things I
+need to do to preview a new blog post are:</p>
+<ol type="1">
+<li>Add an entry to <code>blogs.json</code></li>
+<li>Export the Markdown file to HTML in the <code>blogs</code>
+directory.</li>
+</ol>
+<p>As much as <a href="https://youtu.be/tTnImV8fmwc">I hate Python</a>,
+it has a fairly convenient <code>json</code> module in the standard
+library, and it seems like overkill to bust out Rust and
+<code>serde</code> for a simple task like this<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.
+One of the things I hate about Python is using dictionaries where I
+would typically use a <code>struct</code> in Rust or Go.</p>
+<p>This is a bit of an aside, but if you can’t guess it already, we’re
+building up to another issue with my current blogging setup. I’m about
+to start working on a Python file that will be included in the repo and
+also including snippets of that file in this blog post. In previous
+posts I have simply copy-pasted code, which leads to it getting out of
+sync between the actual code file and the blog post. Somewhat
+surprisingly, it seems that <code>pandoc</code> cannot handle inclusion
+of code files by default<a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a>, so this seems like an opportunity
+to try out the <a href="https://www.gnu.org/software/m4/">m4</a> macro
+processor. Unfortunately, m4 also cannot handle ranges of lines by
+default, but it at least has a <code>syscmd</code> macro that will let
+me shell out to sed to grab the lines I need. Including ranges like this
+should make it easier to structure my code however I want. For example,
+this snippet should expand into itself(!):</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode m4"><code class="sourceCode m4"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">syscmd</span><span class="ch">(</span>{{sed <span class="ch">-</span>n <span class="dv">144</span>p drafts<span class="ch">/</span>blog<span class="ch">-</span>update.md}}<span class="ch">)</span><span class="kw">dnl</span></span></code></pre></div>
+<p>As long as I remember to keep the line number updated if I edit
+anything above it. If I have to adjust the line too many times, I’ll
+switch to a regular expression in the sed command to remove that
+issue.</p>
+<p>Because m4 also defaults to using `’ as its quoting characters, I
+also have to include this at the top of the file:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode m4"><code class="sourceCode m4"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">changequote</span><span class="ch">(</span>`{{&#39;<span class="ch">,</span> `}}&#39;<span class="ch">)</span><span class="kw">dnl</span></span></code></pre></div>
+<p>to change the quoting scheme to something more like Go or jinja
+templates and something that will not conflict with the backticks all
+over Markdown. The trailing <code>dnl</code> keeps m4 from including any
+extra whitespace. Now all I have to do to include code snippets is to
+preprocess my Markdown files with m4. Let’s start a publish script to
+keep track of the steps. In this case, I won’t mess with m4, as I expect
+that the actual steps I use will change as the project goes along. For
+now, all I know to do is</p>
+<pre class="shell"><code>m4 blog-update.md</code></pre>
+<p>which produces the macro-expanded version of the file on stdout. I’ll
+either pipe that to a temporary file later or send it directly into
+pandoc on stdin.</p>
+<p>For now, let’s get back to the original issue at hand: modifying
+<code>blogs.json</code> programmatically. Again, the first thing I want
+to do is define a simple <code>Blog</code> class that mirrors the Go
+version above:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Blog:</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    Title: <span class="bu">str</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    Filename: <span class="bu">str</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    Date: <span class="bu">str</span></span></code></pre></div>
+<p>Here I’m using a <code>dataclass</code> to take advantage of the
+automatic constructor generation and, more importantly, the
+<code>asdict</code> function provided for these classes in my JSON
+serialization code. It’s not very Pythonic, but I’m keeping the Go
+casing for the variable names to make deserializing a little easier.
+Speaking of that, we can load a sequence of <code>Blog</code>s from a
+file with this function:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_blogs(filename):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename) <span class="im">as</span> f:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [Blog(<span class="op">**</span>d) <span class="cf">for</span> d <span class="kw">in</span> json.load(f)]</span></code></pre></div>
+<p>For a simple interface, I’ll just pass the existing blogs file as the
+first command line argument, and the name of the new blog file as the
+second argument. Then, I just check if a blog with that filename already
+exists, and if not, I add it to the front of the list and overwrite the
+file with the new contents. For now, I’ll just expect to edit the
+<code>Title</code> manually, so I’ll use the filename for that as
+well:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    blogs <span class="op">=</span> load_blogs(sys.argv[<span class="dv">1</span>])</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    new_blog_name <span class="op">=</span> Path(sys.argv[<span class="dv">2</span>]).name</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="bu">str</span>(Path(<span class="st">&quot;blogs&quot;</span>).joinpath(new_blog_name).with_suffix(<span class="st">&quot;.html&quot;</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">any</span>((b.Filename <span class="op">==</span> name <span class="cf">for</span> b <span class="kw">in</span> blogs)):</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        date <span class="op">=</span> datetime.today().strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><span class="st">&quot;</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        blogs.insert(<span class="dv">0</span>, Blog(name, name, date))</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(sys.argv[<span class="dv">1</span>], <span class="st">&quot;w&quot;</span>) <span class="im">as</span> out:</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        json.dump(blogs, out, default<span class="op">=</span><span class="kw">lambda</span> o: asdict(o), indent<span class="op">=</span><span class="dv">4</span>)</span></code></pre></div>
+<p>At this point, I have code snippets handled with m4 and updating
+<code>blogs.json</code> with this <code>publish.py</code> script. The
+only step missing is converting to HTML with pandoc. One other minor
+issue is where to plan to run this code. When writing, my working
+directory will be <code>drafts</code>, and there are two easy ways of
+compiling code in Emacs. The first is simply to use
+<code>M-x compile</code>, which uses the current directory as its
+working directory. The second, and the one I use more often, is
+<code>projectile-compile-project</code>, which compiles at the root of
+the project. I think it probably makes more sense then to run my script
+for publishing a blog post in this way. That really only requires me to
+make every file path (such as in the m4 macros) relative to the project
+root instead of the drafts directory.</p>
+<p>First, let’s modify the m4 command above to pipe through pandoc.
+According to the manual, if no input file is specified and no input file
+type is provided, pandoc defaults to reading Markdown from stdin, which
+is exactly what we want. All we need to do is provide the output format,
+HTML in this case:</p>
+<pre class="shell"><code>m4 drafts/blog-update.md | pandoc -o blogs/blog-update.html</code></pre>
+<p>There are a couple of convenience issues to fix with this when we
+promote it to an actual script, but it works well enough for now.
+Unfortunately, my site’s current styling looks absolutely horrible with
+the HTML generated by pandoc, but that is also a fairly separate issue
+from this post. I think I’ll try writing a new style sheet for these new
+posts to avoid too many conflicts with my existing pages.</p>
+<p>Anyway, styling aside, we now have all of the necessary components
+for a publish script:</p>
+<pre class="shell"><code>#!/bin/bash
+
+m4 drafts/blog-update.md | pandoc -o blogs/blog-update.html
+scripts/publish.py json/blogs.json drafts/blog-update.md</code></pre>
+<p>The only finishing touches are to pass in (and process) some command
+line arguments and then I should be back into blogging! Here’s the final
+shell script after applying two of my favorite bash tricks for removing
+prefixes and suffixes:</p>
+<pre class="shell"><code>#!/bin/bash
+
+md_file=$1
+base=${md_file%.md} # trim .md extension
+blog_file=${base##*/}
+
+m4 $md_file | pandoc -o blogs/${blog_file}.html
+scripts/publish.py json/blogs.json $md_file
+</code></pre>
+<p>For completeness, here are the full contents of
+<code>scripts/publish.py</code> too:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/python</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> asdict, dataclass</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Blog:</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    Title: <span class="bu">str</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    Filename: <span class="bu">str</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    Date: <span class="bu">str</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_blogs(filename):</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename) <span class="im">as</span> f:</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [Blog(<span class="op">**</span>d) <span class="cf">for</span> d <span class="kw">in</span> json.load(f)]</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    blogs <span class="op">=</span> load_blogs(sys.argv[<span class="dv">1</span>])</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    new_blog_name <span class="op">=</span> Path(sys.argv[<span class="dv">2</span>]).name</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="bu">str</span>(Path(<span class="st">&quot;blogs&quot;</span>).joinpath(new_blog_name).with_suffix(<span class="st">&quot;.html&quot;</span>))</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">any</span>((b.Filename <span class="op">==</span> name <span class="cf">for</span> b <span class="kw">in</span> blogs)):</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>        date <span class="op">=</span> datetime.today().strftime(<span class="st">&quot;%Y-%m-</span><span class="sc">%d</span><span class="st">&quot;</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        blogs.insert(<span class="dv">0</span>, Blog(name, name, date))</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(sys.argv[<span class="dv">1</span>], <span class="st">&quot;w&quot;</span>) <span class="im">as</span> out:</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>        json.dump(blogs, out, default<span class="op">=</span><span class="kw">lambda</span> o: asdict(o), indent<span class="op">=</span><span class="dv">4</span>)</span></code></pre></div>
+<h1 id="conclusion">Conclusion</h1>
+<p>I’m glad I decided to do this today. It took a couple of hours, but I
+now feel like I am well-equipped to write a post about anything that
+strikes my fancy. My workflow throughout this process has been to run
+<code>./scripts/publish drafts/blog-update.md</code> with
+<code>projectile-compile-project</code> and use my
+<code>recompile</code> key binding on F5 to recompile the HTML after
+changing the Markdown file. With the Go server running locally in a
+background terminal window, this means I can preview the changes
+basically in real time. If I ever write about something
+chemistry-related, I’ll have to extend these scripts to handle LaTeX
+blocks in addition to code blocks, but hopefully that won’t be too bad.
+The combination of m4 and pandoc already seems much nicer than my
+previous setup with Org Mode, and I look forward to writing my next
+post!</p>
+<h1 id="footnotes">Footnotes</h1>
+<!--  LocalWords:  programmatically
+ -->
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Of course you can run Emacs in batch mode and provide
+code either in a script or from the command line, but I think it’s still
+not ideal.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>And I’ve been feeling this itch a lot more recently.
+When I was doing my PhD, writing papers was a major part of my regular
+work and one that I enjoyed. My current position involves basically no
+writing, so I should try to keep in practice somehow.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Go and its JSON package would be more natural than Rust,
+but I don’t really have much interest in writing Go these days. I’d be
+more likely to rewrite the whole server in Rust than to write any
+additional features in Go.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>There is a promising-looking filter called <a
+href="https://github.com/owickstrom/pandoc-include-code">pandoc-include-code</a>
+with all of the features I’m looking for, but it appears to be
+unmaintained with potentially annoying issues remaining open.<a
+href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
