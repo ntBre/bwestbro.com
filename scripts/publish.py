@@ -13,11 +13,6 @@ class Blog:
     Filename: str
     Date: str
 
-    def __init__(self, Title, Filename, Date):
-        self.Title = Title
-        self.Filename = Filename
-        self.Date = Date
-
 
 def load_blogs(filename):
     with open(filename) as f:
