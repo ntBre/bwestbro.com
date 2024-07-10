@@ -49,7 +49,7 @@ ul {
 }
 
 @media screen and (min-width: 601px) and (max-width: 1000px){
-    li {
+    li.nav {
 	float: left;
 	border-right: 1px solid #bbb;
 	font-size: 2vw;
@@ -57,7 +57,7 @@ ul {
 }
 
 @media screen and (min-width: 1000px) {
-    li {
+    li.nav {
 	float: left;
 	border-right: 1px solid #bbb;
 	font-size: 1.6vw;
@@ -65,17 +65,17 @@ ul {
 }
 
 @media screen and (max-width: 400px) {
-    li {
+    li.nav {
 	float: none;
 	font-size: 5vw;
     }
 }
 
-li:last-child {
+li.nav:last-child {
     border-right: none;
 }
 
-li a {
+li.nav a {
     display: block;
     color: white;
     text-align: center;
@@ -83,7 +83,7 @@ li a {
     text-decoration: none;
 }
 
-li a:hover {
+li.nav a:hover {
     text-decoration: none;
     background-color: #111;
 }
@@ -115,6 +115,15 @@ h4 {
 p {
     padding-left: 40px;
     padding-right: 40px;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+ol:not(aside > ol) {
+    padding-left: 80px;
+}
+
+li:not(.nav) {
     color: #FFFFFF;
     font-size: 16px;
 }
@@ -162,6 +171,42 @@ a:active {
     text-decoration: none;
 }
 
+pre.sourceCode {
+    font-family: "Lucida Console", Courier, monospace;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: var(--alum);
+    margin-left: 50px;
+    margin-right: 50px;
+    border: 10px;
+}
+
+pre.shell {
+    font-family: "Lucida Console", Courier, monospace;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: var(--alum);
+    margin-left: 50px;
+    margin-right: 50px;
+    border: 10px;
+}
+
+pre.text {
+    font-family: "Lucida Console", Courier, monospace;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: var(--alum);
+    margin-left: 50px;
+    margin-right: 50px;
+    border: 10px;
+}
+
 .code {
     font-family: "Lucida Console", Courier, monospace;
     padding-top: 20px;
@@ -192,6 +237,11 @@ a:active {
 
 .MJX-TEX {
     color: white;
+}
+
+/* footnotes from pandoc */
+aside > ol > li {
+	color: white;
 }
 
 .figure {
