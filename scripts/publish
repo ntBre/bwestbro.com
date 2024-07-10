@@ -1,0 +1,8 @@
+#!/bin/bash
+
+md_file=$1
+base=${md_file%.md} # trim .md extension
+blog_file=${base##*/}
+
+m4 $md_file | pandoc -o blogs/${blog_file}.html
+scripts/publish.py json/blogs.json $md_file
