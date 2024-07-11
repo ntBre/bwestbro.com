@@ -1,5 +1,10 @@
 [
     {
+        "Title": "Vegan protein",
+        "Filename": "blogs/vegan-protein.html",
+        "Date": "2024-07-11"
+    },
+    {
         "Title": "Improving my blog pipeline",
         "Filename": "blogs/blog-update.html",
         "Date": "2024-07-09"
