@@ -1,0 +1,264 @@
+<p>This is the first in a new series of posts I plan to do reviewing
+books I’ve read recently. As I mentioned in my previous post, this is
+another victim of YouTube procrastination because I’ve considered making
+this a video series instead of a blog series. Nonetheless, I’m finally
+sitting down to work on it, and I think this is a great place to
+start.</p>
+<p>Today’s review is for the excellent book <em>Crafting
+Interpreters</em>, which walks you through two different implementations
+of the same dynamic, interpreted, scripting language, Lox. Every line of
+code is included in the book, and the author Robert Nystrom complements
+the code with commentary on a broad range of topics from language design
+to computer history to computer science fundamentals. The first Lox
+implementation is a straightforward tree-walking interpreter written in
+Java (giving it the abbreviated name jlox), while the second
+implementation is a more complicated but more performant bytecode
+virtual machine in C (clox). If this is your first interpreter or
+programming language book, I think this is a very good progression.</p>
+<p>As you’ll see if you follow this <a
+href="https://craftinginterpreters.com/">link</a>, one of the amazing
+things about <em>Crafting Interpreters</em> is that it is available in
+full online. I personally prefer reading on paper, so I ordered the
+physical copy from Amazon, which, as the website indicates, consists of
+“640 pages of beautiful typography and high resolution hand-drawn
+illustrations.” It’s a little pricey at $60, but for such a good (and
+expansive) book, I think it’s well worth it. I don’t want to start the
+review off on a negative note, but I will point out that it’s quite a
+large book at nearly three pounds and eight by ten inches. This makes it
+a little bit uncomfortable to read in bed, but if you’re really worried
+about that, you can get the ebook, PDF, or web versions.</p>
+<p>Before I dive fully into the review, I should note that I didn’t read
+this book all at once. I originally purchased the book in early 2023 and
+just finished it in mid-2024. As a result, my memory, especially of the
+early jlox chapters, will be a bit fuzzy. I should also note that I did
+not read this book in what I would consider the most productive way. To
+get the most out of this book, you should follow along with each line of
+code, typing it into your editor yourself, running the tests you can
+retrieve from the accompanying GitHub repository, and even trying out
+some of the exercises given at the end of each chapter. I took this
+approach in my initial reading of the jlox section, but after a long
+break from reading the book, I decided that I just wanted to read
+through the remaining several hundred pages rather than implement each
+part of the interpreter. Still, I think I learned a lot from reading
+alone, especially after solidifying some of the fundamentals in the jlox
+implementation. I also plan to keep my copy of the book handy as I work
+on a toy language of my own. I think it will serve as a very useful
+reference in addition to being a pleasurable read. To round out the
+preliminary caveats, for the parts of both jlox and clox that I
+implemented, I also did not follow along in Java and C, respectively.
+Instead, I attempted to port both implementations to Rust. As I will
+expand on later, I think this choice has both pros and cons.</p>
+<p>First of all, I want to start with the book’s strengths. As mentioned
+above, it’s well-written, well-organized, and very detailed. In fact, I
+think this book could possibly be used by beginners to
+<em>programming</em> not just beginners to writing programming
+languages. Nystrom provides such detailed explanations of algorithms and
+data structures that I think the book is very approachable. The clearest
+example for me, having not read the jlox section for almost a year, is
+the hash table implementation in chapter 20. This is one of the greatest
+strengths (and weaknesses) of C, in my opinion: that you have to do a
+lot of things yourself. Because Nystrom decided to write the byte-code
+version of Lox in C, there’s no hash table in the standard library to
+import. As such, he builds a hash table from the ground up, just as he
+builds Lox from the ground up in the rest of the book. Similarly, he
+presents another great introduction to dynamic arrays in chapter 14. At
+first this might seem like a bit of a diversion from the task at hand,
+and you could skip it if you really want to, but I always like to see
+how another programmer, especially a veteran programmer like Nystrom,
+writes and structures their code. Hash tables in particular also have
+various tradeoffs in their implementations, and the author does a good
+job of justifying his choices for a language like Lox. I personally
+already had a pretty good understanding of these data structures and how
+they were built, but I still found these chapters worthwhile for myself,
+as well as seeing them as a massive value for newer programmers.</p>
+<p>Along these lines, one of my biggest issues when learning to program
+was finding a project to work on. I read multiple programming books but
+never really wrote much code because I didn’t have a pressing need to
+build anything<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>. As such, I think this book could be
+a perfect fit for learning to program. It gives you a clear project, all
+of the code you need, and also a good foundation in computer science
+basics. The challenges at the ends of the chapters also give you
+directions for where to extend the code, but I have to imagine that
+anyone reading this book will have the itch to apply its lessons to
+completely separate languages of their own design.</p>
+<p>However, this raises some of the issues I have with the book. I can’t
+really speak for the wider audience of the book, but Java especially is
+not a language I like. I might be scarred from my horrible experience
+with Java in AP Computer Science in high school or from my very boring
+intro to CS class in college, but I just don’t like Java at all. I was
+able to get through the jlox chapters because the quality of the book is
+really good, and I was porting the code to Rust anyway.</p>
+<p>This is probably as good a place as any to expand on the pros and
+cons of this approach mentioned above. The main benefit for me is that
+porting code from one language to another requires you to internalize
+the meaning of the code as you read and then write it rather than simply
+typing in what was given to you. I think there is something magical
+about typing something out yourself as many introductory programming
+texts point out, but I think having to translate the code into the
+syntax and idioms of a different language has an even greater effect on
+your understanding. The negative side, of course, is that you’re now on
+your own for any bugs you encounter. My jlox implementation in Rust
+still cannot properly handle variable resolution because of an issue
+with my <code>Environment</code> implementation<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.
+Part of this difficulty comes from the fact that Java is a
+garbage-collected language and Rust is not, so I can’t follow the code
+in this section (which uses mutable pointers between
+<code>Environment</code> instances) very directly. I’ve tried multiple
+versions with <code>Arc&lt;Cell&lt;Environment&gt;&gt;</code> stuff,
+propagating lifetimes throughout the code, and so on. I think I’ve
+learned enough Rust in the past year that I could probably resolve this
+issue now, but it was pretty frustrating at the time. If you chose
+another garbage-collected language like Go or Python or even OCaml, the
+port would likely be much smoother.</p>
+<p>With that out of the way, I do have some more concrete criticisms
+about Java and the jlox section of the book beyond not liking Java. In
+particular, I think the OOP focus of Java<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+takes away from the primary focus in places. The most vivid example of
+this starts in chapter 5, where the foundation is laid for using the
+Visitor pattern to evaluate expressions. This culminates in chapter 8,
+where the author writes a code generation script to generate all of the
+classes to implement the Visitor pattern for all of the types of
+expressions and statements. Again my memory is a bit fuzzy, so apologies
+if the chapter numbers aren’t quite right, but the point stands. I also
+looked back at my jlox implementation, and I don’t see any code
+generation, at least at a cursory glance. I appear to have implemented
+my expression evaluation with a big <code>match</code> on the various
+types that I put in an <code>enum</code>. I should probably defer to
+Nystrom’s experience and expertise here, but generating a big pile of
+OOP classes with a separate Java script just doesn’t smell right to me.
+But one OOPsie daisy doesn’t ruin the whole jlox implementation, and,
+again, it’s interesting to see how different people write the same code
+anyway.</p>
+<p>I can’t lodge any of the same complaints about C because, as
+mentioned above, C has some aspects going it for it as well. The
+simplicity of the C language makes for some of the great, basic
+explanations I lauded above. C is even easier to port to Rust, at least
+in the parts I’ve tried so far. In the worst cases, you should be able
+to match C pretty much exactly using <code>unsafe</code>, as I’ve done
+in my <a href="https://github.com/ntBre/rwm">rwm</a> project. The only
+downside I can really think of for C is that most people, especially
+beginners, probably would not pick it as their first choice, which is
+really a criticism I would share for both Java and C. I’m obviously
+heavily biased toward Rust, which has its own challenges for beginners,
+especially in the jlox/tree-walking version of the code. As such, I
+think Go is probably a very appealing choice and one that is used in
+another interpreter book that I have not read but have heard about
+online<a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a>. The language selection is basically
+my only hesitation in recommending the book to self-taught programmers,
+but if colleges are still teaching Java, it could be perfect for college
+freshmen wanting to go beyond their classes.</p>
+<p>My final minor complaints are about the testing framework and the Lox
+language itself. The first of these hardly even seems fair because it’s
+obviously positive that the author provides a testing framework in the
+first place, available in the GitHub repository corresponding to the
+book<a href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a>. The complaint is just that it’s
+written in a third, separate language, Dart. This is unfair in its own
+way because Nystrom works at Google on the Dart team, so I can hardly
+blame him for wanting to use (presumably) his preferred tool, but it
+does add another dependency into the mix, if you want to test your Lox
+implementation. On the one hand it makes sense why the tests aren’t
+written in Java or C<a href="#fn6" class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a>; you want them to be runnable
+against both jlox and clox implementations and even against
+implementations in other languages never considered by the author (like
+my Rust implementation). On the other hand, I probably would have gone
+for a more ubiquitous language like Python if I were going for
+portability and generality. The <code>test.dart</code> file in the repo
+is 694 lines of code, but conceptually I think it just runs the provided
+lox binary on some example scripts and compares the output to the
+desired output, so it shouldn’t be too complicated. Anyway, again, it’s
+hard to complain about getting nice tests for free, even if they take a
+little effort to set up if you’re not a regular Dart user.</p>
+<p>For Lox itself, it’s just not really the kind of language I would
+really want to have. It’s semantically similar to Python I guess, with
+an appearance more like C++ or Java:</p>
+<pre class="text"><code>class Base {
+  toString() { return &quot;Base&quot;; }
+}
+
+class Derived &lt; Base {
+  getClosure() {
+    fun closure() {
+      return super.toString();
+    }
+    return closure;
+  }
+
+  toString() { return &quot;Derived&quot;; }
+}
+
+var closure = Derived().getClosure();
+print closure(); // expect: Base</code></pre>
+<p>But now I’m really in the weeds. As described throughout the book,
+the features of the language lead to interesting implementation details,
+and the point is not to end up with everyone’s new favorite scripting
+language.</p>
+<p>At times I also wondered about the structure of the book. Chunks of
+code are presented in one chapter and then later revised as the language
+gets more features. This can give the code in the book a bit of a
+fragmented feeling, and I lost some of my understanding of the overall
+organization. However, it just occurred to me that if I had actually
+been following along with my own code, the monitor in front of me would
+have had the whole structure on it or at least accessible. Thus, I can’t
+even really call this a valid complaint. There might be some case for
+presenting all of the code at once and walking through it linearly, but
+I think the iterative approach in the book more closely models the real
+development process and is simply much easier to follow.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>I feel like I spent way too long on the “issues” in the book for the
+strong positive perception I have of it. I guess it’s just more fun to
+critique than to try to praise things. You can consider anything not
+mentioned in this handful of complaints to be very good, which possibly
+made these points stick out to me more clearly. I’m not sure I want to
+give the books I review ratings, but I guess I will start off with one
+just in case I want to continue that in the future. My first thought is
+a 9/10, but equating that to a 90% or A- grade seems too low. On the
+other hand, I want to maintain a little room at the top for something
+like my favorite book ever, so I won’t just give it a 10/10. I really do
+find it easier to reason about things in terms of grades, so I’ll
+probably settle for a solid A, around 95/100 or 9.5/10. Regardless, I
+highly recommend this book if you’re interested in how programming
+languages work and even the field of computer science more broadly. You
+can use it like a workbook, following along with each line of code as
+it’s presented, but it’s also full of insight and just a pleasurable
+read if you like technical books.</p>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This is why I finally learned to program in grad school,
+where I was able to write programs that helped with (and later became)
+my research.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I can’t remember the details of the Java implementation,
+but you can think of this as a hash map of variable names to their
+values.<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>I’ve actually seen this issue before in a book I should
+also get around to reviewing: <em>Practical Common Lisp</em>. While I
+would rate the book highly, much like <em>Crafting Interpreters</em>,
+one of the practical project chapters (24. Parsing Binary Files)
+includes what I remember as a very off-putting OOP fest. Most of the
+chapter involved setting up some wild class hierarchy to make parsing
+some bytes from a file easier. Probably this was meant to show how easy
+the problem is after you model it in just the right way or something
+like that, but to me it was way over the top.<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://interpreterbook.com/">Writing An
+Interpreter In Go</a> by Thorsten Ball<a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><a
+href="https://github.com/munificent/craftinginterpreters"
+class="uri">https://github.com/munificent/craftinginterpreters</a><a
+href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Not that C has a built-in testing framework like
+<code>cargo test</code>. Maybe Java doesn’t either? I’ve heard of JUnit,
+but I don’t think it comes with Java.<a href="#fnref6"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
